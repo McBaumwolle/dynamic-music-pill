@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.dynamic-music-pill" path="/org/gnome/shell/extensions/dynamic-music-pill/">
+    <key name="scroll-text" type="b">
+      <default>true</default>
+      <summary>Scrolling Text</summary>
+      <description>Automatically animate long track titles</description>
+    </key>
+  </schema>
+</schemalist>

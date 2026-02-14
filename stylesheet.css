@@ -1,0 +1,54 @@
+.music-pill-container {
+    background: transparent !important;
+    margin: 0 10px;
+}
+
+.pill-body {
+    border-radius: 28px;
+    padding: 6px 14px;
+    height: 52px;
+    width: 250px; 
+    /* JS does the background */
+    transition: transform 0.3s ease;
+}
+
+.pill-body:hover {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.art-widget {
+  
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    background-color: transparent; /* A belső rétegek adják a színt */
+}
+
+.fade-overlay-left {
+    background-color: transparent;
+    z-index: 999; 
+}
+
+.fade-overlay-right {
+    background-color: transparent;
+    z-index: 999; 
+}
+
+.music-label-title {
+    font-weight: 800;
+    font-size: 11pt;
+    color: white;
+}
+
+.music-label-artist {
+    font-weight: 500;
+    font-size: 9pt;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.visualizer-bar {
+    width: 3px;
+    border-radius: 2px;
+    transition: background-color 2.0s ease;
+}
