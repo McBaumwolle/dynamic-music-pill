@@ -8,19 +8,19 @@ This extension displays the currently playing media in a sleek, pill-shaped widg
 
 Note: This is my first GNOME extension project! Feedback, code reviews, and contributions are highly welcome.
 
-✨ Features
+**Features**
 
-🎨 Adaptive UI: Background color transitions dynamically based on the average color of the current album art.
+ Adaptive UI: Background color transitions dynamically based on the average color of the current album art.
 
-🔒 Universal Skip Lock: Prevents UI flickering during track changes (3s grace period) – works with keyboard, mouse, and dock controls.
+ Universal Skip Lock: Prevents UI flickering during track changes (3s grace period) – works with keyboard, mouse, and dock controls.
 
-🧠 Smart Player Switching: Automatically prioritizes the active music source (e.g., switches from Spotify to YouTube seamlessly).
+ Smart Player Switching: Automatically prioritizes the active music source (e.g., switches from Spotify to YouTube seamlessly).
 
-🎧 Control: You can Resume/Pause the music by clicking it, or skip it with the mouse scroll.
+ Control: You can Resume/Pause the music by clicking it, or skip it with the mouse scroll.
 
-📜 Scrolling Text: Long titles and artists scroll smoothly (can be toggled in settings).
+ Scrolling Text: Long titles and artists scroll smoothly (can be toggled in settings).
 
-✨ Visual Polish: Blur effects, smooth slide animations, and waveform visualization.
+ Visual Polish: Blur effects, smooth slide animations, and waveform visualization.
 
 📸 Screenshots
 
