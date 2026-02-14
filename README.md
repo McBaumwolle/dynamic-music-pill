@@ -41,24 +41,28 @@ Paused
 From Source (GitHub)
 
 Clone the repository:
-
+`
 git clone [https://github.com/Andbal23/dynamic-music-pill.git](https://github.com/Andbal23/dynamic-music-pill.git)
 cd dynamic-music-pill
-
+`
 
 Build and Install:
 You need to compile the schemas and move the files to your extensions folder.
-
+`
 # Create the directory
 mkdir -p ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
+`
 
 # Copy files
+`
 cp -r * ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal/
+`
 
 # Compile schemas
+`
 cd ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
 glib-compile-schemas schemas/
-
+`
 
 Restart GNOME Shell:
 
@@ -68,9 +72,9 @@ Wayland: Log out and log back in.
 
 Enable the extension:
 Use the "Extensions" app or run:
-
+`
 gnome-extensions enable dynamic-music-pill@andbal
-
+`
 
 ⚙️ Configuration
 
