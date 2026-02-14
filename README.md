@@ -47,7 +47,9 @@ From Source (GitHub)
 
 Clone the repository:
 `
-git clone [https://github.com/Andbal23/dynamic-music-pill.git](https://github.com/Andbal23/dynamic-music-pill.git)
+git clone https://github.com/Andbal23/dynamic-music-pill.git]
+`
+`
 cd dynamic-music-pill
 `
 
@@ -55,6 +57,7 @@ Build and Install:
 You need to compile the schemas and move the files to your extensions folder.
 `
 # Create the directory
+`
 mkdir -p ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
 `
 
