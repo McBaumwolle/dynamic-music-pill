@@ -8,6 +8,11 @@ This extension displays the currently playing media in a sleek, pill-shaped widg
 <img src="screenshots/demo.gif" width="1000" alt="Dynamic Music Pill Logo">
 </p>
 
+**Get it on**
+<a href="https://extensions.gnome.org/extension/9334/dynamic-music-pill/" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/GNOME_logo.svg" alt="GNOME Extension" style="width:100px;">
+</a>
+
 Note: This is my first GNOME extension project! Feedback, code reviews, and contributions are highly welcome.
 
 **Features**
