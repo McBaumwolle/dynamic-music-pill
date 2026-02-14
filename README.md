@@ -4,7 +4,9 @@ A "Dynamic Island" inspired, adaptive music widget for GNOME Shell (45+).
 
 This extension displays the currently playing media in a sleek, pill-shaped widget in the Dash or Top Panel, complete with album art colors, animations, and controls.
 
-*Demo
+<p align="center">
+<img src="screenshots/demo.gif" width="1000" alt="Dynamic Music Pill Logo">
+</p>
 
 Note: This is my first GNOME extension project! Feedback, code reviews, and contributions are highly welcome.
 
@@ -25,8 +27,14 @@ Note: This is my first GNOME extension project! Feedback, code reviews, and cont
 📸 Screenshots
 
 Active / Playing
+<p align="center">
+<img src="screenshots/playing.png" width="1000" alt="Dynamic Music Pill Logo">
+</p>
 
 Paused
+<p align="center">
+<img src="screenshots/paused.png" width="1000" alt="Dynamic Music Pill Logo">
+</p>
 
 🛠 Installation
 
