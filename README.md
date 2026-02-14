@@ -29,7 +29,7 @@ Note: This is my first GNOME extension project! Feedback, code reviews, and cont
 
  Visual Polish: Blur effects, smooth slide animations, and waveform visualization.
 
-📸 Screenshots
+**📸 Screenshots**
 
 Active / Playing
 <p align="center">
@@ -41,7 +41,7 @@ Paused
 <img src="screenshots/paused.png" width="1000" alt="Dynamic Music Pill Logo">
 </p>
 
-🛠 Installation
+**🛠 Installation**
 
 From Source (GitHub)
 
@@ -84,7 +84,7 @@ Use the "Extensions" app or run:
 gnome-extensions enable dynamic-music-pill@andbal
 `
 
-⚙️ Configuration
+**⚙️ Configuration**
 
 You can customize the extension via the Extensions app (or Extension Manager):
 
@@ -94,7 +94,7 @@ Position: Choose between placing the pill above the Dock or in the Top Panel.
 
 More settings coming soon!
 
-🐛 Known Issues & Limitations
+**🐛 Known Issues & Limitations**
 
 Since this is an initial release (v1.0), please keep in mind:
 
@@ -102,7 +102,7 @@ Structure: The codebase is currently monolithic (extension.js contains most logi
 
 Dash Support: Optimized primarily for Dash to Dock or for the basic Dash.
 
-🚀 Roadmap
+**🚀 Roadmap**
 
 [ ] Refactor code into separate classes/modules.
 
@@ -112,8 +112,8 @@ Dash Support: Optimized primarily for Dash to Dock or for the basic Dash.
 
 [ ] Long term: Explore replacing the actual app icon in the dock with the pill.
 
-🤝 Contributing
+**🤝 Contributing**
 
 I welcome contributions! If you have ideas on how to improve the architecture or implement new features (like the icon replacement), feel free to open a Pull Request or an Issue.
-
-License: GPL-3.0
+**
+License: GPL-3.0**
