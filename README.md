@@ -21,7 +21,7 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 
 ---
 
-## 📸 Screenshots
+### 📸 Screenshots
 
 | Dash-to-Dock Integration | Top Panel Mode |
 |:---:|:---:|
@@ -34,16 +34,40 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 
 ---
 
-## 🚀 Installation
+# 🚀 Installation
 
-### 1. Manual Installation
-1.  Download the latest release ZIP.
-2.  Extract it to `~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal/`.
-3.  `cd ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal`
-4.  Compile the schemas:
-    ```bash
-    glib-compile-schemas schemas/
-    ```
+## 1. Manual Installation
+From Source (GitHub)
+
+Clone the repository:
+`
+git clone https://github.com/Andbal23/dynamic-music-pill.git 
+`
+and
+`
+cd dynamic-music-pill
+`
+
+Build and Install:
+You need to compile the schemas and move the files to your extensions folder.
+`
+## Create the directory
+`
+mkdir -p ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
+`
+## Copy files
+`
+cp -r * ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal/
+`
+## Compile schemas
+`
+cd ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
+`
+<br>
+`
+glib-compile-schemas schemas/
+`
+
 5.  Restart GNOME Shell (`Alt+F2`, type `r`, then `Enter`) or log out/in if you are on Wayland.
 6.  Enable the extension via **GNOME Extensions** or **Extension Manager**.
 
