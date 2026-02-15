@@ -7,6 +7,10 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
     
 </p>
 
+![Views](https://komarev.com/ghpvc/?username=Andbal23&repo=dynamic-music-pill&label=Views&color=blue)
+
+![GitHub All Releases](https://img.shields.io/github/downloads/Andbal23/dynamic-music-pill/total?label=Downloads&color=orange)
+
 ---
 
 ## ✨ Features
@@ -76,6 +80,8 @@ via **GNOME Extensions** or **Extension Manager** or `gnome-extensions enable dy
 
 ## 🌐 From GNOME Extensions Store
 Search for **Dynamic Music Pill** on the [GNOME Extensions website](https://extensions.gnome.org/extension/9334/dynamic-music-pill/).
+![GNOME Extension Version](https://img.shields.io/gnome-shell-extension/v/9334)
+![GNOME Extension Rating](https://img.shields.io/gnome-shell-extension/rating/9334)
 
 ---
 
