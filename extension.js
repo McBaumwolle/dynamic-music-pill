@@ -569,7 +569,7 @@ class MusicPill extends St.Widget {
     }
 
     if (this._lastTitle !== title || this._lastArtist !== artist || forceUpdate) {
-        this._titleScroll.setText(title || 'Betöltés...', forceUpdate);
+        this._titleScroll.setText(title || 'Loading...', forceUpdate);
         this._artistScroll.setText(artist || '', forceUpdate);
         this._lastTitle = title;
         this._lastArtist = artist;
@@ -648,7 +648,7 @@ export default class DynamicMusicExtension extends Extension {
     this._recheckTimer = null;
     this._connection = Gio.bus_get_sync(Gio.BusType.SESSION, null);
     
-    // Dock figyelés
+
     this._dockSignals = [];
     this._currentDock = null;
     this._injectTimeout = null;
@@ -742,8 +742,8 @@ export default class DynamicMusicExtension extends Extension {
               }
               container.insert_child_at_index(this._pill, targetIndex);
               
-              // JAVÍTÁS: Amint a helyére került, frissítsük a méreteket is azonnal!
-              // Ez oldja meg a "ki-be kapcsolás kell" problémát váltáskor.
+
+
               this._pill._updateDimensions();
               
           } catch(e) {
@@ -772,14 +772,14 @@ export default class DynamicMusicExtension extends Extension {
     
     if (!container) return;
 
-    // Ha váltottunk, vegyük ki a régiből
+
     let oldParent = this._pill.get_parent();
     if (oldParent && oldParent !== container) {
         oldParent.remove_child(this._pill);
         this._disconnectDockSignals();
     }
 
-    // Dock figyelés
+
     if (target === 0 && this._currentDock !== container) {
         this._disconnectDockSignals();
         this._currentDock = container;
@@ -796,7 +796,7 @@ export default class DynamicMusicExtension extends Extension {
 
     this._ensurePosition(container);
     
-    // JAVÍTÁS: Injektálás végén is kényszerítsük a frissítést, biztos ami biztos
+
     this._pill._updateDimensions();
   }
 
