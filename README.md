@@ -99,6 +99,8 @@ via **GNOME Extensions** or **Extension Manager** or `gnome-extensions enable dy
 
 ## 🛠️ Configuration
 
+<img src="screenshots/settings.png" width="400">
+
 Open the **Settings** to customize the appearance:
 * **Position Mode:** Choose between Manual Index, Start, Center, or End alignment.
 * **Visualizer Style:** Toggle between "Wave" (smooth) or "Beat" (energetic) modes.
