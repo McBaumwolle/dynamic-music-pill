@@ -60,6 +60,9 @@ Open the **Settings** to customize the appearance:
 * **Target Container:** Switch between Dock and Top Panel instantly.
 
 ---
+[![Stars](https://img.shields.io/github/stars/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/stargazers)
+[![Watchers](https://img.shields.io/github/watchers/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/watchers)
+---
 
 ## 📜 License
 
