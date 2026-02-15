@@ -85,6 +85,7 @@ Open the **Settings** to customize the appearance:
 * **Position Mode:** Choose between Manual Index, Start, Center, or End alignment.
 * **Visualizer Style:** Toggle between "Wave" (smooth) or "Beat" (energetic) modes.
 * **Target Container:** Switch between Dock and Top Panel instantly.
+* **Customize the look:** Height, width, offstets, border radius and more.
 
 ---
 [![Stars](https://img.shields.io/github/stars/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/stargazers)
