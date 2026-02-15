@@ -59,7 +59,7 @@ mkdir -p ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
 `
 cp -r * ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal/
 `
-## 
+
 ## **5.** Compile schemas
 `
 cd ~/.local/share/gnome-shell/extensions/dynamic-music-pill@andbal
