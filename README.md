@@ -1,20 +1,19 @@
-# 🎵 Dynamic Music Pill
-
+<table align="center"> <tr> <td align="center" style="border: none !important;"> <img src="screenshots/logo.png" width="90"> </td> <td align="center" style="border: none !important;"> <h1 style="margin: 0; font-size: 45px;">Dynamic Music Pill</h1> </td> </tr> </table>
 A dynamic, elegant, and highly customizable music widget for GNOME Shell. It brings a pill-shaped media controller with a live waveform visualizer directly to your Dash or Panel.
-
+<br></br>
 <p align="center">
   <img src="screenshots/picture.png" alt="Dynamic Music Pill Logo" width="400">
     
 </p>
 
 ---
-
-
+<div align="center">
+  
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Andbal23/dynamic-music-pill/total?label=Download%20from%20release) ![Views](https://komarev.com/ghpvc/?username=Andbal23&repo=dynamic-music-pill&label=Views&color=green) ![GNOME Shell](https://img.shields.io/badge/GNOME-45%20--%2049-blue?logo=gnome&logoColor=white) ![GitHub License](https://img.shields.io/github/license/Andbal23/dynamic-music-pill)
  [![Stars](https://img.shields.io/github/stars/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/stargazers) [![Watchers](https://img.shields.io/github/watchers/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/watchers)
+</div>
 
 ---
-
 ## ✨ Features
 
 * **Dual Placement:** Supports both **Dash** and the **Panel** (Left, Center, and Right sections).
@@ -40,6 +39,7 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 
 ---
 ## 🌐 From GNOME Extensions Store
+
 <p align="left">
   <a href="https://extensions.gnome.org/extension/9334/dynamic-music-pill/">
     <img alt="Get it on GNOME Extensions" width="228" src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true"/>
@@ -98,8 +98,9 @@ via **GNOME Extensions** or **Extension Manager** or `gnome-extensions enable dy
 ---
 
 ## 🛠️ Configuration
-
+<p align="center">
 <img src="screenshots/settings.png" width="400">
+</p>
 
 Open the **Settings** to customize the appearance:
 * **Position Mode:** Choose between Manual Index, Start, Center, or End alignment.
@@ -108,10 +109,13 @@ Open the **Settings** to customize the appearance:
 * **Customize the look:** Height, width, offstets, border radius and more.
 
 ---
-
+<div align="center">
+  
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/andbal)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-red?style=for-the-badge&logo=ko-fi)](https://ko-fi.com/andbal)
----
+</div>
+
+  ---
 ## 📜 License
 
 This project is licensed under the GPL-3.0 License.
