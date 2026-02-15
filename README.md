@@ -82,6 +82,7 @@ via **GNOME Extensions** or **Extension Manager** or `gnome-extensions enable dy
 
 ## 🌐 From GNOME Extensions Store
 Search for **Dynamic Music Pill** on the [GNOME Extensions website](https://extensions.gnome.org/extension/9334/dynamic-music-pill/).
+
 ![GNOME Extension Version](https://img.shields.io/gnome-shell-extension/v/9334)
 ![GNOME Extension Rating](https://img.shields.io/gnome-shell-extension/rating/9334)
 
