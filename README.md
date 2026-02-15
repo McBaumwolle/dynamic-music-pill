@@ -39,6 +39,21 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 </p>
 
 ---
+## 🌐 From GNOME Extensions Store
+<p align="left">
+  <a href="https://extensions.gnome.org/extension/9334/dynamic-music-pill/">
+    <img alt="Get it on GNOME Extensions" width="228" src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true"/>
+  </a>
+  <p align="left"
+    
+  ![GNOME Extension Version](https://img.shields.io/gnome-shell-extension/v/9334)
+![GNOME Extension Rating](https://img.shields.io/gnome-shell-extension/rating/9334)
+  </p>
+</p>
+
+
+
+---
 
 # 🚀 Installation
 
@@ -79,12 +94,6 @@ glib-compile-schemas schemas/
 (`Alt+F2`, type `r`, then `Enter`) or log out/in if you are on Wayland.
 ## **7.**  Enable the extension 
 via **GNOME Extensions** or **Extension Manager** or `gnome-extensions enable dynamic-music-pill@andbal`
-
-## 🌐 From GNOME Extensions Store
-Search for **Dynamic Music Pill** on the [GNOME Extensions website](https://extensions.gnome.org/extension/9334/dynamic-music-pill/).
-
-![GNOME Extension Version](https://img.shields.io/gnome-shell-extension/v/9334)
-![GNOME Extension Rating](https://img.shields.io/gnome-shell-extension/rating/9334)
 
 ---
 
