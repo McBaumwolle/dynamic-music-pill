@@ -6,10 +6,11 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
     
 </p>
 
+
 ---
 <div align="center">
   
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Andbal23/dynamic-music-pill/total?label=Download%20from%20release) ![Views](https://komarev.com/ghpvc/?username=Andbal23&repo=dynamic-music-pill&label=Views&color=green) ![GNOME Shell](https://img.shields.io/badge/GNOME-45%20--%2049-blue?logo=gnome&logoColor=white) ![GitHub License](https://img.shields.io/github/license/Andbal23/dynamic-music-pill)
+![GitHub all releases](https://img.shields.io/github/downloads/Andbal23/dynamic-music-pill/total?style=flat-square&logo=github&label=GitHub%20Downloads) ![Views](https://komarev.com/ghpvc/?username=Andbal23&repo=dynamic-music-pill&label=Views&color=green) ![GNOME Shell](https://img.shields.io/badge/GNOME-45%20--%2049-blue?logo=gnome&logoColor=white) ![GitHub License](https://img.shields.io/github/license/Andbal23/dynamic-music-pill)
  [![Stars](https://img.shields.io/github/stars/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/stargazers) [![Watchers](https://img.shields.io/github/watchers/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/watchers)
 </div>
 
@@ -108,7 +109,6 @@ Open the **Settings** to customize the appearance:
 * **Target Container:** Switch between Dock and Top Panel instantly.
 * **Customize the look:** Height, width, offstets, border radius and more.
 * **Album art** You can turn it off or on.
-
 ---
 <div align="center">
   
@@ -116,6 +116,11 @@ Open the **Settings** to customize the appearance:
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-red?style=for-the-badge&logo=ko-fi)](https://ko-fi.com/andbal)
 </div>
 
+---
+
+## Stars
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Andbal23/dynamic-music-pill&type=Date)](https://star-history.com/#Andbal23/dynamic-music-pill&Date)
   ---
 ## 📜 License
 
