@@ -29,10 +29,6 @@ msgstr "Afficher la pochette d'album"
 msgid "Display the cover art of the currently playing song"
 msgstr "Afficher la pochette de la chanson en cours"
 
-#: prefs.js:30 prefs.js:33
-msgid "show-album-art"
-msgstr ""
-
 #: prefs.js:38
 msgid "Enable Scroll Controls"
 msgstr "Activer le contrôle par défilement"
