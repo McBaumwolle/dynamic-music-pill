@@ -30,7 +30,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
             active: settings.get_boolean('show-album-art'),
             valign: Gtk.Align.CENTER
         });
-        settings.bind(_('show-album-art'), artToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+        settings.bind('show-album-art', artToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
         artRow.add_suffix(artToggle);
         genGroup.add(artRow);
         /// SKIP
