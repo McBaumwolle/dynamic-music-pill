@@ -1383,10 +1383,9 @@ export default class DynamicMusicExtension extends Extension {
     this._ownerId = this._connection.signal_subscribe('org.freedesktop.DBus', 'org.freedesktop.DBus', 'NameOwnerChanged', '/org/freedesktop/DBus', null, Gio.DBusSignalFlags.NONE, () => this._scan());
     this._scan();
 
-    this._watchdog = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1, () => {
+    this._watchdog = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 5, () => {
         this._monitorGameMode();
-        this._updateUI();
-        if (!this._pill.get_parent()) {
+        if (this._pill && !this._pill.get_parent()) {
              this._inject();
         }
         return GLib.SOURCE_CONTINUE;
@@ -1408,49 +1407,32 @@ export default class DynamicMusicExtension extends Extension {
 
       try { player.RaiseRemote(); } catch(e) {}
 
-      let pid = null;
-      try {
-          let res = this._connection.call_sync(
-              'org.freedesktop.DBus', '/org/freedesktop/DBus', 'org.freedesktop.DBus',
-              'GetConnectionUnixProcessID', new GLib.Variant('(s)', [player._busName]),
-              null, Gio.DBusCallFlags.NONE, -1, null
-          );
-          pid = res.deep_unpack()[0];
-      } catch(e) {}
 
-      let tracker = Shell.WindowTracker.get_default();
-      let appSys = Shell.AppSystem.get_default();
+      this._connection.call(
+          'org.freedesktop.DBus',
+          '/org/freedesktop/DBus',
+          'org.freedesktop.DBus',
+          'GetConnectionUnixProcessID',
+          new GLib.Variant('(s)', [player._busName]),
+          null,
+          Gio.DBusCallFlags.NONE,
+          -1,
+          null,
+          (conn, res) => {
+              try {
+                  let result = conn.call_finish(res);
+                  let pid = result.deep_unpack()[0];
+                  if (pid) {
+                      let tracker = Shell.WindowTracker.get_default();
+                      let app = tracker.get_app_from_pid(pid);
+                      if (app) app.activate();
+                  }
+              } catch (e) {
 
-      if (pid) {
-          let app = tracker.get_app_from_pid(pid);
-          if (app) {
-              app.activate();
-              return;
+                  this._activateAppByBusName(player._busName);
+              }
           }
-      }
-
-      let busName = player._busName;
-      let desktopId = null;
-      if (busName.startsWith('org.mpris.MediaPlayer2.')) {
-          desktopId = busName.substring(23);
-      }
-
-      if (desktopId) {
-          const map = {
-              'brave': 'brave-browser',
-              'chrome': 'google-chrome',
-              'chromium': 'chromium-browser',
-              'edge': 'microsoft-edge',
-              'spotify': 'spotify'
-          };
-          if (map[desktopId]) desktopId = map[desktopId];
-
-          let app = appSys.lookup_app(desktopId) ||
-                    appSys.lookup_app(`${desktopId}.desktop`) ||
-                    appSys.lookup_app(desktopId.toLowerCase()) ||
-                    appSys.lookup_app(`${desktopId.toLowerCase()}.desktop`);
-          if (app) app.activate();
-      }
+      );
   }
 
   toggleMenu() {
@@ -1613,18 +1595,40 @@ export default class DynamicMusicExtension extends Extension {
   }
 
   _scan() {
-    this._connection.call('org.freedesktop.DBus', '/org/freedesktop/DBus', 'org.freedesktop.DBus', 'ListNames', null, null, Gio.DBusCallFlags.NONE, -1, null, (c, res) => {
-        try {
-            let r = smartUnpack(c.call_finish(res));
-            let names = Array.isArray(r[0]) ? r[0] : (Array.isArray(r) ? r : []);
-            let mprisNames = names.filter(n => n.startsWith('org.mpris.MediaPlayer2.'));
-            mprisNames.forEach(n => this._add(n));
-            for (let [name, proxy] of this._proxies) {
-                if (!mprisNames.includes(name)) this._proxies.delete(name);
+
+    this._connection.call(
+        'org.freedesktop.DBus',
+        '/org/freedesktop/DBus',
+        'org.freedesktop.DBus',
+        'ListNames',
+        null,
+        null,
+        Gio.DBusCallFlags.NONE,
+        -1,
+        null,
+        (c, res) => {
+            try {
+                let r = smartUnpack(c.call_finish(res));
+                let names = Array.isArray(r[0]) ? r[0] : (Array.isArray(r) ? r : []);
+                let mprisNames = names.filter(n => n.startsWith('org.mpris.MediaPlayer2.'));
+
+
+                mprisNames.forEach(n => {
+                    if (!this._proxies.has(n)) this._add(n);
+                });
+
+k
+                for (let [name, proxy] of this._proxies) {
+                    if (!mprisNames.includes(name)) {
+                        this._proxies.delete(name);
+                    }
+                }
+                this._triggerUpdate();
+            } catch (e) {
+
             }
-            this._updateUI();
-        } catch (e) {}
-    });
+        }
+    );
   }
 
 _add(name) {
