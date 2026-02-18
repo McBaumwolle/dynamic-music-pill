@@ -1,5 +1,5 @@
 <table align="center"> <tr> <td align="center" style="border: none !important;"> <img src="screenshots/logo.png" width="90"> </td> <td align="center" style="border: none !important;"> <h1 style="margin: 0; font-size: 45px;">Dynamic Music Pill</h1> </td> </tr> </table>
-A dynamic, elegant, and highly customizable music widget for GNOME Shell. It brings a pill-shaped media controller with a live waveform visualizer directly to your Dash or Panel.
+A dynamic, elegant, and highly customizable music widget for GNOME Shell. It brings a pill-shaped media controller with a live waveform visualizer directly to your Dash or Panel with a Pop-Up Menu.
 <br></br>
 <p align="center">
   <img src="screenshots/picture.png" alt="Dynamic Music Pill Logo" width="400">
@@ -18,6 +18,7 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 ## ✨ Features
 
 * **Dual Placement:** Supports both **Dash** and the **Panel** (Left, Center, and Right sections).
+* * **Pop-Up Menu:** You can seek into the track from the Pop-Up Menu and more.
 * **Adaptive Colors:** The widget's background and visualizer colors automatically adapt to the current track's album art.
 * **Live Visualizer:** Real-time waveform or beat animation that reacts to your music.
 * **🎮 Game Mode:** Automatically stop the visual and the scrolling when a fullscreen application is active to ensure maximum performance (FPS).
@@ -32,6 +33,11 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 | Dash-to-Dock Integration | Top Panel Mode |
 |:---:|:---:|
 | <img src="screenshots/playing.png" width="400"> | <img src="screenshots/panel.png" width="400"> |
+
+
+| Pop-Up Dash | Pop-Up Panel |
+|:---:|:---:|
+| <img src="screenshots/popdash.png" width="400"> | <img src="screenshots/poppanel.png" width="400"> |
 
 ### 🎬 Preview
 <p align="center">
