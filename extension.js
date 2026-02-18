@@ -44,8 +44,10 @@ const MPRIS_IFACE = `
     <method name="Raise"/>
   </interface>
 </node>`;
+let NodeInfo = Gio.DBusNodeInfo.new_for_xml(MPRIS_IFACE);
+let PlayerInterfaceInfo = NodeInfo.interfaces.find(i => i.name === 'org.mpris.MediaPlayer2.Player');
 
-const PlayerProxy = Gio.DBusProxy.makeProxyWrapper(MPRIS_IFACE);
+//const PlayerProxy = Gio.DBusProxy.makeProxyWrapper(MPRIS_IFACE);
 
 // --- Helpers ---
 
@@ -99,14 +101,14 @@ class CrossfadeArt extends St.Widget {
         });
         this._radius = 10;
         this._shadowCSS = 'box-shadow: none;';
-        const layerStyle = 'background-size: cover;'; 
+        const layerStyle = 'background-size: cover;';
         this._layerA = new St.Widget({ x_expand: true, y_expand: true, opacity: 255, style: layerStyle });
         this._layerB = new St.Widget({ x_expand: true, y_expand: true, opacity: 0, style: layerStyle });
         this._layerA._bgUrl = null;
         this._layerB._bgUrl = null;
-        this._layerA._lastCss = null; // Cache inicializálása
-        this._layerB._lastCss = null; // Cache inicializálása
-        
+        this._layerA._lastCss = null; // Cache
+        this._layerB._lastCss = null; // Cache
+
         this.add_child(this._layerA);
         this.add_child(this._layerB);
         this._activeLayer = this._layerA;
@@ -131,26 +133,38 @@ class CrossfadeArt extends St.Widget {
         let url = layer._bgUrl;
         let bgPart = url ? `background-image: url("${url}");` : '';
         let safeR = (typeof this._radius === 'number' && !isNaN(this._radius)) ? this._radius : 10;
-        
-        // FIX: Nincs background-position %, és CACHING
-        let newCss = `border-radius: ${safeR}px; background-size: cover; ${this._shadowCSS} ${bgPart}`;
-        
-        // TELJESÍTMÉNY FIX: Ha nem változott, nem állítjuk be újra
+
+
+        let activeShadow = (url && url.length > 0) ? this._shadowCSS : 'box-shadow: none;';
+
+
+        let newCss = `border-radius: ${safeR}px; background-size: cover; background-position: center; ${activeShadow} ${bgPart}`;
+
         if (layer._lastCss === newCss) return;
         layer._lastCss = newCss;
-        
+
         setStyleSafe(layer, newCss, 'CrossfadeArt Layer');
     }
 
     setArt(newUrl, force = false) {
-        if (!force && this._currentUrl === newUrl) return;
+
+        let isVisible = (this._activeLayer.opacity > 250);
+
+
+        if (!force && this._currentUrl === newUrl && isVisible) return;
+
+
         this._currentUrl = newUrl;
         this._nextLayer._bgUrl = newUrl;
         this._refreshLayerStyle(this._nextLayer);
+
+
         this._nextLayer.opacity = 0;
         this._nextLayer.show();
+
         this.set_child_below_sibling(this._nextLayer, this._activeLayer);
         this._activeLayer.remove_all_transitions();
+
         this._activeLayer.ease({
             opacity: 0,
             duration: 600,
@@ -162,6 +176,8 @@ class CrossfadeArt extends St.Widget {
                 this._nextLayer.opacity = 0;
             }
         });
+
+
         this._nextLayer.opacity = 255;
     }
 });
@@ -199,9 +215,9 @@ class ScrollLabel extends St.Widget {
         this._settings.connect('changed::scroll-text', () => this.setText(this._text, true));
 
         this.connect('notify::allocation', () => {
-            // FIX: Throttling - ha már van timer, nem indítunk újat és nem töröljük a régit
+
             if (this._resizeTimer) return;
-            
+
             this._resizeTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
                 if (this.has_allocation()) this._checkResize();
                 this._resizeTimer = null;
@@ -308,7 +324,7 @@ class ScrollLabel extends St.Widget {
     }
 });
 
-// --- VIZUALIZÁTOR ---
+// --- VIZUAL ---
 const WaveformVisualizer = GObject.registerClass(
 class WaveformVisualizer extends St.BoxLayout {
   _init() {
@@ -318,7 +334,7 @@ class WaveformVisualizer extends St.BoxLayout {
     this._mode = 1;
     this._isPlaying = false;
     this._timerId = null;
-    
+
     for (let i = 0; i < 4; i++) {
       let bar = new St.Bin({ style_class: 'visualizer-bar', y_align: Clutter.ActorAlign.END });
       setStyleSafe(bar, 'height: 4px; background-color: rgba(255,255,255,0.5);', 'Visualizer Init');
@@ -338,7 +354,7 @@ class WaveformVisualizer extends St.BoxLayout {
       if (c && typeof c.r === 'number' && !isNaN(c.r)) r = Math.min(255, c.r + 100);
       if (c && typeof c.g === 'number' && !isNaN(c.g)) g = Math.min(255, c.g + 100);
       if (c && typeof c.b === 'number' && !isNaN(c.b)) b = Math.min(255, c.b + 100);
-      
+
       this._color = `${Math.floor(r)},${Math.floor(g)},${Math.floor(b)}`;
       if (!this._isPlaying) this._updateVisuals(0);
   }
@@ -346,7 +362,7 @@ class WaveformVisualizer extends St.BoxLayout {
   setPlaying(playing) {
     if (this._isPlaying === playing) return;
     this._isPlaying = playing;
-    
+
     if (this._timerId) { GLib.source_remove(this._timerId); this._timerId = null; }
 
     if (playing && this._mode !== 0) {
@@ -363,26 +379,26 @@ class WaveformVisualizer extends St.BoxLayout {
 
   _updateVisuals(t) {
       if (!this.get_parent()) return;
-      
+
       this._bars.forEach((bar, idx) => {
           let h = 4;
           let opacity = this._isPlaying ? 1.0 : 0.4;
-          
+
           if (this._isPlaying) {
-              if (this._mode === 1) { 
+              if (this._mode === 1) {
                   h = 6 + Math.abs(Math.sin(t + idx)) * 12;
-              } else if (this._mode === 2) { 
+              } else if (this._mode === 2) {
                   h = 6 + Math.abs(Math.sin(t + (idx * 1.3))) * 12;
                   if (Math.random() > 0.8) h += 4;
               }
           }
-          
+
           if (typeof h !== 'number' || isNaN(h) || !isFinite(h)) h = 4;
 
-          bar.set_height(h); 
+          bar.set_height(h);
           let css = `background-color: rgba(${this._color}, ${opacity});`;
-          
-          // CACHING FIX a vizualizátorhoz
+
+          // CACHING FIX
           if (bar._lastCss !== css) {
               bar._lastCss = css;
               setStyleSafe(bar, css, `Visualizer Bar ${idx}`);
@@ -393,35 +409,35 @@ class WaveformVisualizer extends St.BoxLayout {
 
 // --- POPUP MENU ---
 const ExpandedPlayer = GObject.registerClass(
-class ExpandedPlayer extends St.Widget { 
+class ExpandedPlayer extends St.Widget {
     _init(controller) {
         super._init({
             width: Main.layoutManager.primaryMonitor.width,
             height: Main.layoutManager.primaryMonitor.height,
             reactive: true,
             visible: false,
-            x: 0, 
+            x: 0,
             y: 0
         });
-        
+
         this._controller = controller;
         this._settings = controller._settings;
         this._player = null;
         this._updateTimer = null;
         this._seekLockTime = 0;
         this._currentArtUrl = null;
-        this._lastPopupCss = null; // Cache init
-        
+        this._lastPopupCss = null;
+
         this._backgroundBtn = new St.Button({
             style: 'background-color: transparent;',
             reactive: true,
-            x_expand: true, 
+            x_expand: true,
             y_expand: true,
             width: Main.layoutManager.primaryMonitor.width,
             height: Main.layoutManager.primaryMonitor.height
         });
         this._backgroundBtn.connect('clicked', () => {
-            this.hide(); 
+            this.hide();
         });
         this.add_child(this._backgroundBtn);
 
@@ -434,17 +450,18 @@ class ExpandedPlayer extends St.Widget {
         this.add_child(this._box);
 
         let topRow = new St.BoxLayout({ style_class: 'expanded-top-row', vertical: false, y_align: Clutter.ActorAlign.CENTER });
-        
+
         this._vinyl = new St.Widget({ style_class: 'vinyl-container', layout_manager: new Clutter.BinLayout() });
-        this._vinyl.set_pivot_point(0.5, 0.5); 
-        
+        this._vinyl.set_pivot_point(0.5, 0.5);
+
         this._artA = new St.Widget({ style: 'background-size: cover; border-radius: 50px;', x_expand: true, y_expand: true, opacity: 255 });
         this._artB = new St.Widget({ style: 'background-size: cover; border-radius: 50px;', x_expand: true, y_expand: true, opacity: 0 });
-        
+
         this._vinyl.add_child(this._artA);
         this._vinyl.add_child(this._artB);
         this._activeLayer = this._artA;
         this._nextLayer = this._artB;
+
 
         this._vinylBin = new St.Bin({ child: this._vinyl });
         topRow.add_child(this._vinylBin);
@@ -452,7 +469,7 @@ class ExpandedPlayer extends St.Widget {
         let infoBox = new St.BoxLayout({ style_class: 'track-info-box', vertical: true, y_align: Clutter.ActorAlign.CENTER, x_expand: true });
         this._titleLabel = new St.Label({ style_class: 'expanded-title', text: '...', x_expand: true });
         this._artistLabel = new St.Label({ style_class: 'expanded-artist', text: '...' });
-        
+
         this._titleLabel.clutter_text.ellipsize = Pango.EllipsizeMode.END;
         this._artistLabel.clutter_text.ellipsize = Pango.EllipsizeMode.END;
 
@@ -464,7 +481,7 @@ class ExpandedPlayer extends St.Widget {
         let progressBox = new St.BoxLayout({ style_class: 'progress-container', vertical: false, y_align: Clutter.ActorAlign.CENTER });
         this._currentTimeLabel = new St.Label({ style_class: 'progress-time', text: '0:00', x_align: Clutter.ActorAlign.END });
         this._totalTimeLabel = new St.Label({ style_class: 'progress-time', text: '0:00', x_align: Clutter.ActorAlign.START });
-        
+
         this._sliderBin = new St.Widget({ style_class: 'progress-slider-bg', x_expand: true, reactive: true, y_align: Clutter.ActorAlign.CENTER });
         this._sliderFill = new St.Widget({ style_class: 'progress-slider-fill' });
         this._sliderBin.add_child(this._sliderFill);
@@ -480,10 +497,10 @@ class ExpandedPlayer extends St.Widget {
         this._box.add_child(progressBox);
 
         let controlsRow = new St.BoxLayout({ style_class: 'controls-row', vertical: false, x_align: Clutter.ActorAlign.CENTER, reactive: true });
-        
+
         let prevBtn = new St.Button({ style_class: 'control-btn', child: new St.Icon({ icon_name: 'media-skip-backward-symbolic' }), reactive: true, can_focus: true });
         prevBtn.connect('button-release-event', () => { this._controller.previous(); return Clutter.EVENT_STOP; });
-        
+
         this._playPauseIcon = new St.Icon({ icon_name: 'media-playback-start-symbolic' });
         let playPauseBtn = new St.Button({ style_class: 'control-btn', child: this._playPauseIcon, reactive: true, can_focus: true });
         playPauseBtn.connect('button-release-event', () => { this._controller.togglePlayback(); return Clutter.EVENT_STOP; });
@@ -513,72 +530,78 @@ class ExpandedPlayer extends St.Widget {
         let useShadow = this._settings.get_boolean('popup-enable-shadow');
         let followTrans = this._settings.get_boolean('popup-follow-transparency');
         let followRadius = this._settings.get_boolean('popup-follow-radius');
-        
+
         let rawRadius = followRadius ? this._settings.get_int('border-radius') : 24;
         let radius = (typeof rawRadius === 'number' && !isNaN(rawRadius)) ? rawRadius : 24;
 
         let finalAlpha = followTrans ? (alpha || 1.0) : 0.95;
-        
+
         let safeR = (typeof r === 'number' && !isNaN(r)) ? Math.floor(r) : 40;
         let safeG = (typeof g === 'number' && !isNaN(g)) ? Math.floor(g) : 40;
         let safeB = (typeof b === 'number' && !isNaN(b)) ? Math.floor(b) : 40;
 
         let bgStyle = `background-color: rgba(${safeR}, ${safeG}, ${safeB}, ${finalAlpha});`;
-        
-        // FIX: box-shadow (nincs spread, nincs %)
         let shadowStyle = useShadow ? 'box-shadow: 0px 8px 30px rgba(0,0,0,0.5);' : 'box-shadow: none;';
-        
-        // FIX: border szétbontva
         let borderStyle = `border-width: 1px; border-style: solid; border-color: rgba(255,255,255,0.1);`;
-        
+
         let css = `${bgStyle} ${borderStyle} border-radius: ${radius}px; padding: 20px; ${shadowStyle} min-width: 320px;`;
-        
-        // TELJESÍTMÉNY FIX: Cache check
+
         if (this._lastPopupCss === css) return;
         this._lastPopupCss = css;
-        
+
         setStyleSafe(this._box, css, 'ExpandedPlayer Popup');
     }
 
     updateContent(title, artist, artUrl, status) {
         if (this._titleLabel) this._titleLabel.text = title || 'Unknown Title';
         if (this._artistLabel) this._artistLabel.text = artist || 'Unknown Artist';
-        
-        this._seekLockTime = 0; 
 
-        if (this._currentArtUrl !== artUrl) {
-            this._currentArtUrl = artUrl;
-            let bg = artUrl ? `url("${artUrl}")` : 'none';
-            // FIX: Nincs background-position %
-            let style = `background-image: ${bg}; background-size: cover; border-radius: 50px;`;
-            if (!artUrl) style = 'background-color: #333; border-radius: 50px;';
+        this._seekLockTime = 0;
 
-            setStyleSafe(this._nextLayer, style, 'ExpandedPlayer Vinyl Next');
-            this._nextLayer.opacity = 0;
-            this._nextLayer.show();
-            
-            this._activeLayer.ease({
-                opacity: 0,
-                duration: 500,
-                mode: Clutter.AnimationMode.EASE_OUT_QUAD
-            });
-            this._nextLayer.ease({
-                opacity: 255,
-                duration: 500,
-                mode: Clutter.AnimationMode.EASE_OUT_QUAD
-            });
-            
-            let temp = this._activeLayer;
-            this._activeLayer = this._nextLayer;
-            this._nextLayer = temp;
+
+        if (!artUrl) {
+            this._vinylBin.hide();
+            this._stopVinyl();
+            this._currentArtUrl = null;
+        } else {
+            this._vinylBin.show();
+
+            if (this._currentArtUrl !== artUrl) {
+                this._currentArtUrl = artUrl;
+                let bg = `url("${artUrl}")`;
+                let style = `background-image: ${bg}; background-size: cover; border-radius: 50px;`;
+
+                setStyleSafe(this._nextLayer, style, 'ExpandedPlayer Vinyl Next');
+                this._nextLayer.opacity = 0;
+                this._nextLayer.show();
+
+                this._activeLayer.ease({
+                    opacity: 0,
+                    duration: 500,
+                    mode: Clutter.AnimationMode.EASE_OUT_QUAD
+                });
+                this._nextLayer.ease({
+                    opacity: 255,
+                    duration: 500,
+                    mode: Clutter.AnimationMode.EASE_OUT_QUAD
+                });
+
+                let temp = this._activeLayer;
+                this._activeLayer = this._nextLayer;
+                this._nextLayer = temp;
+            }
+
+            if (status === 'Playing') {
+                this._startVinyl();
+            } else {
+                this._stopVinyl();
+            }
         }
 
         if (status === 'Playing') {
             this._playPauseIcon.icon_name = 'media-playback-pause-symbolic';
-            this._startVinyl();
         } else {
             this._playPauseIcon.icon_name = 'media-playback-start-symbolic';
-            this._stopVinyl();
         }
     }
 
@@ -601,28 +624,26 @@ class ExpandedPlayer extends St.Widget {
     hide() {
         this._stopTimer();
         this._stopVinyl();
-        this.ease({ 
-            opacity: 0, 
-            duration: 200, 
+        this.ease({
+            opacity: 0,
+            duration: 200,
             mode: Clutter.AnimationMode.EASE_OUT_QUAD,
             onComplete: () => {
                 this.visible = false;
                 if (this._controller) {
                     this._controller.closeMenu();
                 }
-            } 
+            }
         });
     }
 
     destroy() {
-
-    if (this._tickId) {
-        GLib.source_remove(this._tickId);
-        this._tickId = null;
+        if (this._tickId) {
+            GLib.source_remove(this._tickId);
+            this._tickId = null;
+        }
+        super.destroy();
     }
-
-    super.destroy();
-}
 
     _startTimer() {
         if (this._updateTimer) GLib.source_remove(this._updateTimer);
@@ -639,7 +660,7 @@ class ExpandedPlayer extends St.Widget {
 
     _tick() {
         if (!this._player || !this.get_parent()) return GLib.SOURCE_REMOVE;
-        
+
         let meta = this._player.Metadata;
         let length = meta ? smartUnpack(meta['mpris:length']) : 0;
         if (length <= 0) return;
@@ -649,7 +670,7 @@ class ExpandedPlayer extends St.Widget {
 
         let cachedPos = this._player._lastPosition || 0;
         let lastUpdate = this._player._lastPositionTime || now;
-        
+
         let currentPos = cachedPos;
         if (this._player.PlaybackStatus === 'Playing') {
             currentPos += (now - lastUpdate) * 1000;
@@ -658,7 +679,7 @@ class ExpandedPlayer extends St.Widget {
 
         this._currentTimeLabel.text = formatTime(currentPos);
         this._totalTimeLabel.text = formatTime(length);
-        
+
         let percent = Math.min(1, Math.max(0, currentPos / length));
         let totalW = this._sliderBin.width;
         if (totalW > 0) {
@@ -672,35 +693,30 @@ class ExpandedPlayer extends St.Widget {
         let length = meta ? smartUnpack(meta['mpris:length']) : 0;
         if (length <= 0) return;
 
-
         let [x, y] = event.get_coords();
         let [sliderX, sliderY] = this._sliderBin.get_transformed_position();
         let relX = x - sliderX;
         let width = this._sliderBin.width;
-        
+
         let percent = Math.min(1, Math.max(0, relX / width));
         let targetPos = Math.floor(length * percent);
-
 
         this._seekLockTime = Date.now();
         this._player._lastPosition = targetPos;
         this._player._lastPositionTime = Date.now();
-        
+
         this._currentTimeLabel.text = formatTime(targetPos);
         let totalW = this._sliderBin.width;
         if (totalW > 0) {
             this._sliderFill.width = Math.max(6, totalW * percent);
         }
 
-        // 3. DBus
         try {
-
             let trackId = '/org/mpris/MediaPlayer2/TrackList/NoTrack';
             if (meta && meta['mpris:trackid']) {
                 let tid = smartUnpack(meta['mpris:trackid']);
                 if (tid) trackId = tid;
             }
-
 
             if (this._controller && this._controller._connection) {
                 this._controller._connection.call(
@@ -708,7 +724,7 @@ class ExpandedPlayer extends St.Widget {
                     '/org/mpris/MediaPlayer2',
                     'org.mpris.MediaPlayer2.Player',
                     'SetPosition',
-                    new GLib.Variant('(ox)', [trackId, targetPos]), // Explicit (ObjectPath, Int64)
+                    new GLib.Variant('(ox)', [trackId, targetPos]),
                     null,
                     Gio.DBusCallFlags.NONE,
                     -1,
@@ -716,7 +732,6 @@ class ExpandedPlayer extends St.Widget {
                     (conn, res) => {
                         try {
                             conn.call_finish(res);
-
                         } catch (e) {
                             console.log(`Seek error DBus: ${e.message}`);
                         }
@@ -731,7 +746,7 @@ class ExpandedPlayer extends St.Widget {
     _startVinyl() {
         if (!this._vinyl) return;
         if (!this._settings.get_boolean('popup-vinyl-rotate')) {
-            this._stopVinyl(); 
+            this._stopVinyl();
             return;
         }
         this._vinyl.remove_all_transitions();
@@ -783,8 +798,8 @@ class MusicPill extends St.Widget {
     this._targetColor = { r: 40, g: 40, b: 40 };
     this._colorAnimId = null;
     this._hideGraceTimer = null;
-    
-    // Cache változók
+
+
     this._lastBodyCss = null;
     this._lastLeftCss = null;
     this._lastRightCss = null;
@@ -850,7 +865,7 @@ class MusicPill extends St.Widget {
     this._body.add_child(this._visBin);
     this.add_child(this._body);
 
-    // --- KLIKK ESEMÉNYEK ---
+    // --- Click ---
     this.connect('button-press-event', () => {
         if (!this._body) return;
         this._body.ease({ scale_x: 0.96, scale_y: 0.96, duration: 80, mode: Clutter.AnimationMode.EASE_OUT_QUAD });
@@ -871,7 +886,7 @@ class MusicPill extends St.Widget {
         if (action) {
             this._controller.performAction(action);
         }
-        
+
         return Clutter.EVENT_STOP;
     });
 
@@ -1003,14 +1018,19 @@ class MusicPill extends St.Widget {
           this._artBin.visible = false;
           return;
       }
+
+
       let hasMeta = this._lastArtUrl && this._lastArtUrl.length > 0;
+
       if (hasMeta) {
           if (this._artDebounceTimer) {
               GLib.source_remove(this._artDebounceTimer);
               this._artDebounceTimer = null;
           }
           this._artBin.visible = true;
+          this._artBin.opacity = 255;
       } else {
+
           if (!this._artDebounceTimer) {
               this._artDebounceTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
                    this._artBin.visible = false;
@@ -1067,7 +1087,7 @@ class MusicPill extends St.Widget {
         this.translation_x = hOffset;
 
         if (shadowEnabled) {
-            // FIX: box-shadow 3 paraméter (nincs spread, nincs %)
+
             this._shadowCSS = `box-shadow: 0px 2px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity});`;
         } else {
             this._shadowCSS = `box-shadow: none;`;
@@ -1152,10 +1172,14 @@ class MusicPill extends St.Widget {
   updateDisplay(title, artist, artUrl, status, busName, isSkipActive, player = null) {
     if (!this.get_parent()) return;
 
+
+    console.log(`[MusicPill DEBUG] Frissítés - Cím: ${title} | Art: ${artUrl ? 'VAN' : 'NINCS'} | Busz: ${busName}`);
+
     this._currentStatus = status;
     let forceUpdate = false;
 
     if (this._currentBusName !== busName) {
+        console.log(`[MusicPill DEBUG] Lejátszó váltás történt: ${this._currentBusName} -> ${busName}`);
         this._currentBusName = busName;
         this._lastTitle = null;
         this._lastArtist = null;
@@ -1169,10 +1193,11 @@ class MusicPill extends St.Widget {
 
     if (!title || status === 'Stopped') {
         if (isSkipActive) return;
+        console.log(`[MusicPill DEBUG] Nincs tartalom vagy leállítva, indítom az elrejtést.`);
         if (!this._hideGraceTimer && this._isActiveState) {
             this._hideGraceTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 5000, () => {
                 if (!this.get_parent()) return GLib.SOURCE_REMOVE;
-                
+
                 let fixDock = this._settings.get_boolean('fix-dock-autohide');
                 this._isActiveState = false;
                 this.reactive = false;
@@ -1203,17 +1228,18 @@ class MusicPill extends St.Widget {
         this._hideGraceTimer = null;
     }
 
+
     if (!this._isActiveState || this.opacity === 0 || this.width <= 1) {
+        console.log(`[MusicPill DEBUG] Pill kényszerített megjelenítése.`);
         this._isActiveState = true;
         this.reactive = true;
         this.visible = true;
+        this.opacity = 255;
         let fixDock = this._settings.get_boolean('fix-dock-autohide');
         let startW = fixDock ? 1 : 0;
         this._updateDimensions();
-        this.set_width(startW);
-        this._body.set_width(startW);
-        this.ease({ width: this._targetWidth, opacity: 255, duration: 500, mode: Clutter.AnimationMode.EASE_OUT_BACK });
-        this._body.ease({ width: this._targetWidth, duration: 500, mode: Clutter.AnimationMode.EASE_OUT_BACK });
+        this.set_width(this._targetWidth);
+        this._body.set_width(this._targetWidth);
     }
 
     if (this._lastTitle !== title || this._lastArtist !== artist || forceUpdate) {
@@ -1225,18 +1251,30 @@ class MusicPill extends St.Widget {
 
     this._visualizer.setPlaying(status === 'Playing' && !this._gameModeActive);
 
-    if (forceUpdate || (artUrl && artUrl !== this._lastArtUrl)) {
+
+    if (forceUpdate || artUrl !== this._lastArtUrl) {
+        console.log(`[MusicPill DEBUG] Kép frissítése: ${artUrl}`);
         this._lastArtUrl = artUrl;
-        this._artWidget.setArt(artUrl, forceUpdate);
+
         if (artUrl) {
-             this._loadColorFromArt(artUrl);
+
+            if (this._artDebounceTimer) {
+                GLib.source_remove(this._artDebounceTimer);
+                this._artDebounceTimer = null;
+            }
+            this._artBin.show();
+            this._artBin.opacity = 255;
+            this._artWidget.setArt(artUrl, true);
+            this._loadColorFromArt(artUrl);
+        } else {
+            console.log(`[MusicPill DEBUG] Nincs kép, indítom az art visibility kezelőt.`);
+            this._updateArtVisibility();
         }
     } else {
         this._startColorTransition();
     }
-    this._updateArtVisibility();
-    
-    // POPUP UPDATE FIX: Átadjuk az AKTÍV lejátszót is!
+
+
     if (this._controller._expandedPlayer && this._controller._expandedPlayer.visible) {
         if (player) {
             this._controller._expandedPlayer.setPlayer(player);
@@ -1250,7 +1288,7 @@ class MusicPill extends St.Widget {
     file.load_contents_async(null, (f, res) => {
         try {
 
-            if (!this || !this.get_parent) return; 
+            if (!this || !this.get_parent) return;
             if (this.get_parent() === null) return;
 
             let [ok, bytes] = f.load_contents_finish(res);
@@ -1261,7 +1299,7 @@ class MusicPill extends St.Widget {
                 let stream = Gio.MemoryInputStream.new_from_bytes(bytes);
                 let pixbuf = GdkPixbuf.Pixbuf.new_from_stream(stream, null);
                 this._targetColor = getAverageColor(pixbuf);
-                
+
 
                 if (this._visualizer && this._visualizer.setColor) {
                     this._visualizer.setColor(this._targetColor);
@@ -1305,25 +1343,25 @@ class MusicPill extends St.Widget {
       let safeR = (typeof r === 'number' && !isNaN(r)) ? Math.floor(r) : 40;
       let safeG = (typeof g === 'number' && !isNaN(g)) ? Math.floor(g) : 40;
       let safeB = (typeof b === 'number' && !isNaN(b)) ? Math.floor(b) : 40;
-      
+
       let safePadY = (typeof this._padY === 'number' && !isNaN(this._padY)) ? Math.floor(this._padY) : 6;
       let safePadX = (typeof this._padX === 'number' && !isNaN(this._padX)) ? Math.floor(this._padX) : 14;
       let safeRadius = (typeof this._radius === 'number' && !isNaN(this._radius)) ? Math.floor(this._radius) : 28;
 
       let bgStyle = `background-color: rgba(${safeR}, ${safeG}, ${safeB}, ${alpha});`;
       let borderOp = (this._currentStatus === 'Playing') ? 0.2 : 0.1;
-      
-      // FIX: border szétbontva
+
+      // FIX: border
       let borderStyle = `border-width: 1px; border-style: solid; border-color: rgba(255, 255, 255, ${borderOp});`;
-      
+
       let paddingStyle = `padding: ${safePadY}px ${safePadX}px;`;
       let radiusStyle = `border-radius: ${safeRadius}px;`;
 
       let shadow = this._shadowCSS ? this._shadowCSS : 'box-shadow: none;';
 
       let css = `${bgStyle} ${borderStyle} ${paddingStyle} ${radiusStyle} ${shadow}`;
-      
-      // TELJESÍTMÉNY FIX: Cache check
+
+      // FIX: Cache check
       if (this._lastBodyCss !== css) {
           this._lastBodyCss = css;
           setStyleSafe(this._body, css, 'MusicPill Main');
@@ -1331,8 +1369,8 @@ class MusicPill extends St.Widget {
 
       let startColor = `rgba(${safeR}, ${safeG}, ${safeB}, ${alpha})`;
       let endColor = `rgba(${safeR}, ${safeG}, ${safeB}, 0)`;
-      
-      // FIX: Nincs 0% és 100% jelölő, és CACHING
+
+      // FIX
       let gradientLeft = `background-image: linear-gradient(to right, ${startColor}, ${endColor});`;
       if (this._lastLeftCss !== gradientLeft) {
           this._lastLeftCss = gradientLeft;
@@ -1346,7 +1384,7 @@ class MusicPill extends St.Widget {
       }
 
       this._displayedColor = { r: safeR, g: safeG, b: safeB };
-      
+
       if (this._controller && this._controller._expandedPlayer && this._controller._expandedPlayer.visible) {
           if (typeof this._controller._expandedPlayer.updateStyle === 'function') {
               this._controller._expandedPlayer.updateStyle(safeR, safeG, safeB, alpha);
@@ -1361,7 +1399,7 @@ export default class DynamicMusicExtension extends Extension {
     this.initTranslations();
     this._settings = this.getSettings('org.gnome.shell.extensions.dynamic-music-pill');
     this._pill = new MusicPill(this);
-    this._expandedPlayer = null; 
+    this._expandedPlayer = null;
     this._proxies = new Map();
     this._lastWinnerName = null;
     this._lastStatusTime = 0;
@@ -1369,7 +1407,8 @@ export default class DynamicMusicExtension extends Extension {
     this._updateTimeoutId = null;
     this._recheckTimer = null;
     this._connection = Gio.bus_get_sync(Gio.BusType.SESSION, null);
-
+    this._artCache = new Map();
+    this._lastValidArtUrl = null;
     this._dockSignals = [];
     this._currentDock = null;
     this._injectTimeout = null;
@@ -1402,38 +1441,97 @@ export default class DynamicMusicExtension extends Extension {
   }
 
   openApp() {
-      let player = this._getActivePlayer();
-      if (!player) return;
+        let player = this._getActivePlayer();
+        if (!player) return;
 
-      try { player.RaiseRemote(); } catch(e) {}
+        // 1. DesktopEntry
+        try {
+            let desktopId = player.DesktopEntry;
+            if (desktopId) {
+                if (!desktopId.endsWith('.desktop')) desktopId += '.desktop';
+                let app = Shell.AppSystem.get_default().lookup_app(desktopId);
+                if (app) {
+                    app.activate();
+                    return;
+                }
+            }
+        } catch (e) {}
+
+        // 2.  PID
+        this._connection.call(
+            'org.freedesktop.DBus', '/org/freedesktop/DBus', 'org.freedesktop.DBus',
+            'GetConnectionUnixProcessID',
+            new GLib.Variant('(s)', [player._busName]),
+            null, Gio.DBusCallFlags.NONE, -1, null,
+            (conn, res) => {
+                let pidFound = false;
+                try {
+                    let result = conn.call_finish(res);
+                    let pid = result.deep_unpack()[0];
+                    if (pid) {
+
+                        pidFound = this._activateWindowByPid(pid);
+                    }
+                } catch (e) {}
 
 
-      this._connection.call(
-          'org.freedesktop.DBus',
-          '/org/freedesktop/DBus',
-          'org.freedesktop.DBus',
-          'GetConnectionUnixProcessID',
-          new GLib.Variant('(s)', [player._busName]),
-          null,
-          Gio.DBusCallFlags.NONE,
-          -1,
-          null,
-          (conn, res) => {
-              try {
-                  let result = conn.call_finish(res);
-                  let pid = result.deep_unpack()[0];
-                  if (pid) {
-                      let tracker = Shell.WindowTracker.get_default();
-                      let app = tracker.get_app_from_pid(pid);
-                      if (app) app.activate();
-                  }
-              } catch (e) {
+                if (!pidFound) {
+                    this._activateWindowBruteForce(player);
+                }
+            }
+        );
+    }
 
-                  this._activateAppByBusName(player._busName);
-              }
-          }
-      );
-  }
+    _activateWindowByPid(pid) {
+        let tracker = Shell.WindowTracker.get_default();
+        let app = tracker.get_app_from_pid(pid);
+        if (app) {
+            let windows = app.get_windows();
+            if (windows && windows.length > 0) {
+                if (Main.activateWindow) Main.activateWindow(windows[0]);
+                else windows[0].activate(global.get_current_time());
+                return true;
+            }
+            app.activate();
+            return true;
+        }
+        return false;
+    }
+
+
+    _activateWindowBruteForce(player) {
+
+        let searchTerms = [];
+        if (player.Identity) searchTerms.push(player.Identity.toLowerCase());
+        if (player.DesktopEntry) searchTerms.push(player.DesktopEntry.toLowerCase());
+
+
+        searchTerms = searchTerms.map(s => s.split(' ')[0]);
+
+        let appSystem = Shell.AppSystem.get_default();
+        let runningApps = appSystem.get_running();
+
+        for (let app of runningApps) {
+            let appName = app.get_name().toLowerCase();
+            let appId = app.get_id().toLowerCase().replace('.desktop', '');
+
+
+            let match = searchTerms.some(term => appName.includes(term) || appId.includes(term));
+
+            if (match) {
+                let windows = app.get_windows();
+                if (windows && windows.length > 0) {
+
+                    if (Main.activateWindow) Main.activateWindow(windows[0]);
+                    else windows[0].activate(global.get_current_time());
+                    return;
+                }
+            }
+        }
+
+
+        try { player.RaiseRemote(); } catch(e) {}
+    }
 
   toggleMenu() {
       if (this._expandedPlayer) {
@@ -1595,113 +1693,124 @@ export default class DynamicMusicExtension extends Extension {
   }
 
   _scan() {
-
     this._connection.call(
-        'org.freedesktop.DBus',
-        '/org/freedesktop/DBus',
-        'org.freedesktop.DBus',
-        'ListNames',
-        null,
-        null,
-        Gio.DBusCallFlags.NONE,
-        -1,
-        null,
+        'org.freedesktop.DBus', '/org/freedesktop/DBus', 'org.freedesktop.DBus', 'ListNames',
+        null, null, Gio.DBusCallFlags.NONE, -1, null,
         (c, res) => {
             try {
                 let r = smartUnpack(c.call_finish(res));
                 let names = Array.isArray(r[0]) ? r[0] : (Array.isArray(r) ? r : []);
                 let mprisNames = names.filter(n => n.startsWith('org.mpris.MediaPlayer2.'));
 
+                let changed = false;
 
                 mprisNames.forEach(n => {
-                    if (!this._proxies.has(n)) this._add(n);
+                    if (!this._proxies.has(n)) {
+                        this._add(n);
+                        changed = true;
+                    }
                 });
 
-k
                 for (let [name, proxy] of this._proxies) {
                     if (!mprisNames.includes(name)) {
                         this._proxies.delete(name);
+                        this._artCache.delete(name);
+                        changed = true;
                     }
                 }
-                this._triggerUpdate();
-            } catch (e) {
 
-            }
+
+                if (changed) {
+                    this._updateUI();
+                }
+            } catch (e) {}
         }
     );
-  }
+}
 
-_add(name) {
+
+    _add(name) {
+        // Ha már létezik a proxy, nem csinálunk semmit
         if (this._proxies.has(name)) return;
-        try {
-            let p = new PlayerProxy(this._connection, name, '/org/mpris/MediaPlayer2');
-            p._busName = name;
-            p._lastSeen = Date.now();
-            p._lastStatusTime = Date.now();
-            p._lastPlayingTime = 0;
-            p._lastPosition = 0;
-            p._lastPositionTime = Date.now();
 
-            p.connectSignal('Seeked', (proxy, senderName, [position]) => {
-                let now = Date.now();
-                p._lastPosition = position;
-                p._lastPositionTime = now;
 
-                if (this._expandedPlayer && this._expandedPlayer.visible && this._lastWinnerName === p._busName) {
-                    this._expandedPlayer._tick();
-                }
-            });
+        Gio.DBusProxy.new(
+            this._connection,
+            Gio.DBusProxyFlags.NONE,
+            PlayerInterfaceInfo,
+            name,
+            '/org/mpris/MediaPlayer2',
+            'org.mpris.MediaPlayer2.Player',
+            null,
+            (source, res) => {
+                try {
 
-            p.connect('g-properties-changed', (proxy, changed) => {
-                if (!this._proxies.has(p._busName)) return;
+                    let p = Gio.DBusProxy.new_finish(res);
+                    p._busName = name;
+                    p._lastSeen = Date.now();
+                    p._lastStatusTime = Date.now();
 
-                let keys = changed.unpack();
-                let now = Date.now();
-                p._lastSeen = now;
-                p._lastStatusTime = now;
 
-                if (keys.PlaybackStatus) {
-                    let status = smartUnpack(keys.PlaybackStatus);
-                    if (status !== 'Playing') {
-                        p._lastPosition += (now - p._lastPositionTime) * 1000;
-                        p._lastPositionTime = now;
-                    } else {
-                        p._lastPositionTime = now;
-                    }
-                }
-
-                if (keys.Position) {
-                    p._lastPosition = keys.Position.deep_unpack();
-                    p._lastPositionTime = now;
-                    this._triggerUpdate();
-                    return;
-                }
-
-                if (keys.Metadata && this._lastWinnerName === p._busName) {
-                    this._lastActionTime = now;
+                    let status = p.PlaybackStatus;
+                    p._lastPlayingTime = (status === 'Playing') ? Date.now() : 0;
                     p._lastPosition = 0;
-                    p._lastPositionTime = now;
-                }
+                    p._lastPositionTime = Date.now();
 
-                if (keys.PlaybackStatus && smartUnpack(keys.PlaybackStatus) === 'Playing') {
-                    p._lastPlayingTime = now;
-                }
+                    p.connectSignal('Seeked', (proxy, senderName, [position]) => {
+                        p._lastPosition = position;
+                        p._lastPositionTime = Date.now();
 
-                if (keys.Metadata || keys.PlaybackStatus) {
+                        if (this._expandedPlayer && this._expandedPlayer.visible && this._lastWinnerName === p._busName) {
+                            this._expandedPlayer._tick();
+                        }
+                    });
+
+                    p.connect('g-properties-changed', (proxy, changed, invalidated) => {
+                        if (!this._proxies.has(p._busName)) return;
+
+                        let keys = changed.deep_unpack();
+                        let now = Date.now();
+
+                        p._lastSeen = now;
+                        p._lastStatusTime = now;
+
+                        // PlaybackStatus
+                        if (keys.PlaybackStatus) {
+                            let s = keys.PlaybackStatus;
+                            if (s !== 'Playing') {
+                                p._lastPosition += (now - p._lastPositionTime) * 1000;
+                            }
+                            p._lastPositionTime = now;
+
+                            if (s === 'Playing') p._lastPlayingTime = now;
+                        }
+
+                        if (keys.Position) {
+                            p._lastPosition = keys.Position;
+                            p._lastPositionTime = now;
+                            this._triggerUpdate();
+                            return;
+                        }
+
+
+                        if (keys.Metadata || keys.PlaybackStatus) {
+                            this._triggerUpdate();
+                        }
+                    });
+
+                    p.connect('notify::g-name-owner', () => {
+                        this._scan();
+                    });
+
+                    // 5. Proxy
+                    this._proxies.set(name, p);
                     this._triggerUpdate();
+
+                } catch (e) {
+                    console.error(`[DynamicMusicPill] Hiba a proxy létrehozásakor (${name}): ${e.message}`);
                 }
-            });
-
-            p.connect('notify::g-name-owner', () => {
-                 this._scan();
-            });
-
-            this._proxies.set(name, p);
-            this._triggerUpdate();
-
-        } catch (e) {
-            console.error(e);
-        }
+            }
+        );
     }
 
     _triggerUpdate() {
@@ -1715,121 +1824,141 @@ _add(name) {
             return GLib.SOURCE_REMOVE;
         });
     }
-  _updateUI() {
-    if (this._recheckTimer) {
-        GLib.source_remove(this._recheckTimer);
-        this._recheckTimer = null;
-    }
 
-    let target = this._settings ? this._settings.get_int('target-container') : 0;
-    let container = null;
-    if (target === 0) {
-        let dtd = Main.panel.statusArea['dash-to-dock'];
-        container = (dtd && dtd._box) ? dtd._box : (Main.overview.dash._box || null);
-    } else if (target === 1) container = Main.panel._leftBox;
-    else if (target === 2) container = Main.panel._centerBox;
-    else if (target === 3) container = Main.panel._rightBox;
+    _updateUI() {
 
-    if (container) {
-        this._ensurePosition(container);
-    }
-
-    let active = this._getActivePlayer();
-    if (active) {
-        this._lastWinnerName = active._busName;
-        let m = active.Metadata;
-        let title = null, artist = null, artUrl = null;
-        if (m) {
-            title = smartUnpack(m['xesam:title']);
-            artist = smartUnpack(m['xesam:artist']);
-            if (Array.isArray(artist)) artist = artist.map(a => smartUnpack(a)).join(', ');
-            artUrl = smartUnpack(m['mpris:artUrl']);
+        if (this._recheckTimer) {
+            GLib.source_remove(this._recheckTimer);
+            this._recheckTimer = null;
         }
+
+
+        let target = this._settings ? this._settings.get_int('target-container') : 0;
+        let container = null;
+        if (target === 0) {
+            let dtd = Main.panel.statusArea['dash-to-dock'];
+            container = (dtd && dtd._box) ? dtd._box : (Main.overview.dash._box || null);
+        } else if (target === 1) container = Main.panel._leftBox;
+        else if (target === 2) container = Main.panel._centerBox;
+        else if (target === 3) container = Main.panel._rightBox;
+
+        if (container) {
+            this._ensurePosition(container);
+        }
+
+        let active = this._getActivePlayer();
+        if (active) {
+
+            let playerChanged = (this._lastWinnerName !== active._busName);
+            this._lastWinnerName = active._busName;
+
+            let m = active.Metadata;
+            let title = null, artist = null, artUrl = null;
+            let currentArt = null;
+
+            if (m) {
+                let metaObj = (m instanceof GLib.Variant) ? m.deep_unpack() : m;
+                title = smartUnpack(metaObj['xesam:title']);
+                artist = smartUnpack(metaObj['xesam:artist']);
+                if (Array.isArray(artist)) artist = artist.map(a => smartUnpack(a)).join(', ');
+                currentArt = smartUnpack(metaObj['mpris:artUrl']);
+            }
+
+            // --- CACHE  ---
+
+            let rawName = active._busName || "";
+            let cacheKey = rawName;
+            if (cacheKey.includes('.instance')) {
+                cacheKey = cacheKey.split('.instance')[0];
+            }
+
+            if (currentArt && typeof currentArt === 'string' && currentArt.trim() !== "") {
+                this._artCache.set(cacheKey, currentArt);
+                artUrl = currentArt;
+            }
+
+            else if (this._artCache.has(cacheKey)) {
+                artUrl = this._artCache.get(cacheKey);
+            }
+            else {
+                artUrl = null;
+            }
+
+            if (!artUrl && active.PlaybackStatus === 'Playing' && !this._retryArtTimer) {
+                this._retryArtTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
+                    this._retryArtTimer = null;
+                    // Csak akkor frissítünk újra, ha még létezik a lejátszó
+                    if (this._proxies.has(active._busName)) {
+                        this._updateUI();
+                    }
+                    return GLib.SOURCE_REMOVE;
+                });
+            }
+
+            let now = Date.now();
+            let isSkipActive = (now - this._lastActionTime < 3000);
+
+
+            this._pill.updateDisplay(title, artist, artUrl, active.PlaybackStatus, active._busName, isSkipActive, active);
+        } else {
+
+            this._pill.updateDisplay(null, null, null, 'Stopped', null, false);
+        }
+    }
+
+
+
+    _getActivePlayer() {
+        let proxiesArr = Array.from(this._proxies.values());
+        if (proxiesArr.length === 0) return null;
         let now = Date.now();
-        let isSkipActive = (now - this._lastActionTime < 3000);
 
-        this._pill.updateDisplay(title, artist, artUrl, active.PlaybackStatus, active._busName, isSkipActive, active);
-    } else {
-        this._pill.updateDisplay(null, null, null, 'Stopped', null, false);
+        if (now - this._lastActionTime < 3000 && this._lastWinnerName) {
+            let lockedPlayer = proxiesArr.find(p => p._busName === this._lastWinnerName);
+            if (lockedPlayer) return lockedPlayer;
+        }
+
+        let scoredPlayers = proxiesArr.map(p => {
+            let score = 0;
+            let status = p.PlaybackStatus;
+            let m = p.Metadata;
+            let hasTitle = m && smartUnpack(m['xesam:title']);
+            if (status === 'Playing' && hasTitle) score = 500;
+            else if (status === 'Paused' && hasTitle) score = 100;
+            return { player: p, score: score };
+        });
+
+        scoredPlayers.sort((a, b) => {
+            if (b.score !== a.score) return b.score - a.score;
+            return b.player._lastPlayingTime - a.player._lastPlayingTime;
+        });
+
+        let winner = scoredPlayers[0].player;
+        if (winner.PlaybackStatus !== 'Playing') {
+            let anyPlaying = scoredPlayers.find(s => s.player.PlaybackStatus === 'Playing' && smartUnpack(s.player.Metadata['xesam:title']));
+            if (anyPlaying) winner = anyPlaying.player;
+        }
+        return winner;
     }
-  }
 
-  _getActivePlayer() {
-      let proxiesArr = Array.from(this._proxies.values());
-      if (proxiesArr.length === 0) return null;
-      let now = Date.now();
+    togglePlayback() { let p = this._getActivePlayer(); if (p) p.PlayPauseRemote(); }
+    next() { this._lastActionTime = Date.now(); let p = this._getActivePlayer(); if (p) p.NextRemote(); }
+    previous() { this._lastActionTime = Date.now(); let p = this._getActivePlayer(); if (p) p.PreviousRemote(); }
 
-      if (now - this._lastActionTime < 3000 && this._lastWinnerName) {
-          let lockedPlayer = proxiesArr.find(p => p._busName === this._lastWinnerName);
-          if (lockedPlayer) {
-              if (lockedPlayer.PlaybackStatus !== 'Playing' && !this._recheckTimer) {
-                  let remaining = 3100 - (now - this._lastActionTime);
-                  this._recheckTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, remaining, () => {
-                      this._updateUI();
-                      return GLib.SOURCE_REMOVE;
-                  });
-              }
-              return lockedPlayer;
-          }
-      }
-
-      let scoredPlayers = proxiesArr.map(p => {
-          let score = 0;
-          let status = p.PlaybackStatus;
-          let m = p.Metadata;
-          let hasTitle = m && smartUnpack(m['xesam:title']);
-          if (status === 'Playing' && hasTitle) score = 500;
-          else if (status === 'Paused' && hasTitle) score = 100;
-          else score = 0;
-          return { player: p, score: score };
-      });
-
-      scoredPlayers.sort((a, b) => {
-          if (b.score !== a.score) return b.score - a.score;
-          if (b.player._lastPlayingTime !== a.player._lastPlayingTime) {
-              return b.player._lastPlayingTime - a.player._lastPlayingTime;
-          }
-          return b.player._lastSeen - a.player._lastSeen;
-      });
-
-      let winner = scoredPlayers[0].player;
-
-      if (winner.PlaybackStatus !== 'Playing') {
-
-    let anyPlaying = scoredPlayers.find(s => s.player.PlaybackStatus === 'Playing' && smartUnpack(s.player.Metadata['xesam:title']));
-    if (anyPlaying) winner = anyPlaying.player;
-}
-
-let winM = winner.Metadata;
-
-if (!winM || !smartUnpack(winM['xesam:title']) || (winner.PlaybackStatus === 'Stopped' && (now - this._lastActionTime >= 3000))) {
-
-    let backup = scoredPlayers.find(s => s.player.PlaybackStatus === 'Playing' && smartUnpack(s.player.Metadata['xesam:title']));
-    if (backup) return backup.player;
-    return null;
-}
-      return winner;
-  }
-
-  togglePlayback() { let p = this._getActivePlayer(); if (p) p.PlayPauseRemote(); }
-  next() { this._lastActionTime = Date.now(); let p = this._getActivePlayer(); if (p) p.NextRemote(); }
-  previous() { this._lastActionTime = Date.now(); let p = this._getActivePlayer(); if (p) p.PreviousRemote(); }
-
-  disable() {
-    this._disconnectDockSignals();
-    if (this._focusSignal) global.display.disconnect(this._focusSignal);
-    if (this._injectTimeout) GLib.source_remove(this._injectTimeout);
-    if (this._watchdog) GLib.source_remove(this._watchdog);
-    if (this._recheckTimer) GLib.source_remove(this._recheckTimer);
-    if (this._ownerId) this._connection.signal_unsubscribe(this._ownerId);
-    if (this._expandedPlayer) {
-        this._expandedPlayer.destroy();
-        this._expandedPlayer = null;
+    disable() {
+        this._disconnectDockSignals();
+        if (this._focusSignal) global.display.disconnect(this._focusSignal);
+        if (this._injectTimeout) GLib.source_remove(this._injectTimeout);
+        if (this._watchdog) GLib.source_remove(this._watchdog);
+        if (this._recheckTimer) GLib.source_remove(this._recheckTimer);
+        if (this._updateTimeoutId) GLib.source_remove(this._updateTimeoutId);
+        if (this._ownerId) this._connection.signal_unsubscribe(this._ownerId);
+        if (this._expandedPlayer) {
+            this._expandedPlayer.destroy();
+            this._expandedPlayer = null;
+        }
+        if (this._pill) this._pill.destroy();
+        this._proxies.clear();
+        this._settings = null;
     }
-    if (this._pill) {
-        this._pill.destroy();
-    }
-    this._proxies.clear();
-    this._settings = null;
-  }
 }
