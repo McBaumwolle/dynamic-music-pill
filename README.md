@@ -33,6 +33,11 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 |:---:|:---:|
 | <img src="screenshots/playing.png" width="400"> | <img src="screenshots/panel.png" width="400"> |
 
+
+| Pop-Up Dash | Pop-Up Panel |
+|:---:|:---:|
+| <img src="screenshots/popdash.png" width="400"> | <img src="screenshots/poppanel.png" width="400"> |
+
 ### 🎬 Preview
 <p align="center">
   <img src="screenshots/demo.gif" alt="Dynamic Music Pill Demo">
