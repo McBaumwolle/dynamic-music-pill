@@ -18,9 +18,13 @@
       <summary>Pop-up inherits border radius</summary>
     </key>
 
-    <key name="show-album-art" type="b">
-      <default>true</default>
-      <summary>Show Album Art</summary>
+    <key name="dock-art-size" type="i">
+      <default>44</default>
+      <summary>Album Art size in Dock mode</summary>
+    </key>
+    <key name="panel-art-size" type="i">
+      <default>22</default>
+      <summary>Album Art size in Panel mode</summary>
     </key>
     <key name="fix-dock-autohide" type="b">
       <default>false</default>
@@ -69,23 +73,16 @@
       <range min="100" max="600"/>
     </key>
     <key name="pill-height" type="i">
-      <default>64</default>
+      <default>56</default>
       <range min="20" max="100"/>
-    </key>
-    <key name="art-size" type="i">
-      <default>42</default>
-      <range min="10" max="100"/>
     </key>
     <key name="panel-pill-height" type="i">
       <default>28</default>
       <range min="20" max="60"/>
     </key>
-    <key name="panel-art-size" type="i">
-      <default>22</default>
-      <range min="10" max="50"/>
-    </key>
+
     <key name="vertical-offset" type="i">
-      <default>0</default>
+      <default>-1</default>
       <range min="-30" max="30"/>
     </key>
     <key name="horizontal-offset" type="i">
@@ -104,6 +101,10 @@
       <default>0</default>
       <range min="0" max="3"/>
     </key>
+    <key name="show-album-art" type="b">
+      <default>true</default>
+      <summary>Show Album Art</summary>
+    </key>
     <key name="enable-gamemode" type="b">
       <default>true</default>
       <summary>Game Mode</summary>
@@ -113,7 +114,7 @@
       <range min="0" max="2"/>
     </key>
     <key name="border-radius" type="i">
-      <default>24</default>
+      <default>22</default>
       <range min="0" max="50"/>
     </key>
     <key name="enable-shadow" type="b">

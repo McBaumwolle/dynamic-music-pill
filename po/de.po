@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dynamic Music Pill\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 18:35+0100\n"
+"POT-Creation-Date: 2026-02-18 02:45+0100\n"
 "PO-Revision-Date: 2026-02-17 00:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -274,31 +274,36 @@ msgstr "Nach links (-) oder rechts (+) verschieben"
 msgid "Dimensions (Dock Mode)"
 msgstr "Abmessungen (Dock-Modus)"
 
-#: prefs.js:343 prefs.js:359
+#: prefs.js:343 prefs.js:365
+#, fuzzy
+msgid "Album Art Size"
+msgstr "Albumcover anzeigen"
+
+#: prefs.js:349 prefs.js:371
 msgid "Widget Width"
 msgstr "Widget-Breite"
 
-#: prefs.js:350 prefs.js:366
+#: prefs.js:356 prefs.js:378
 msgid "Widget Height"
 msgstr "Widget-Höhe"
 
-#: prefs.js:357
+#: prefs.js:363
 msgid "Dimensions (Panel Mode)"
 msgstr "Abmessungen (Panel-Modus)"
 
-#: prefs.js:381
+#: prefs.js:393
 msgid "System & Reset"
 msgstr ""
 
-#: prefs.js:385
+#: prefs.js:397
 msgid "System"
 msgstr ""
 
-#: prefs.js:387
+#: prefs.js:399
 msgid "Fix Dock Auto-hide"
 msgstr "Dock Auto-Hide beheben"
 
-#: prefs.js:388
+#: prefs.js:400
 msgid ""
 "WARNING! Use it only if you have problem, keeps a 1px invisible spacer to "
 "prevent Dash-to-Dock from collapsing"
@@ -306,59 +311,59 @@ msgstr ""
 "WARNUNG! Nur bei Problemen verwenden, behält einen 1px unsichtbaren "
 "Platzhalter, um das Zusammenklappen von Dash-to-Dock zu verhindern"
 
-#: prefs.js:399
+#: prefs.js:411
 msgid "Game Mode"
 msgstr "Spielmodus"
 
-#: prefs.js:400
+#: prefs.js:412
 msgid "Disable animations when a fullscreen app is active"
 msgstr "Animationen bei Vollbild-Apps deaktivieren"
 
-#: prefs.js:411
+#: prefs.js:423
 msgid "Danger Zone"
 msgstr "Gefahrenzone"
 
-#: prefs.js:413
+#: prefs.js:425
 msgid "Factory Reset"
 msgstr "Werksreset"
 
-#: prefs.js:414
+#: prefs.js:426
 msgid "Reset all configuration options to defaults"
 msgstr "Alle Einstellungen auf Standardwerte zurücksetzen"
 
-#: prefs.js:417
+#: prefs.js:429
 msgid "Reset All"
 msgstr "Alles zurücksetzen"
 
-#: prefs.js:456
+#: prefs.js:468
 msgid "About"
 msgstr "Über"
 
-#: prefs.js:461
+#: prefs.js:473
 msgid "Support the Project"
 msgstr "Projekt unterstützen"
 
-#: prefs.js:464
+#: prefs.js:476
 msgid "Support on Ko-fi"
 msgstr "Auf Ko-fi unterstützen"
 
-#: prefs.js:465
+#: prefs.js:477
 msgid "Buy me a coffee on Ko-fi"
 msgstr "Kauf mir einen Kaffee auf Ko-fi"
 
-#: prefs.js:473
+#: prefs.js:485
 msgid "Buy Me a Coffee"
 msgstr "Buy Me a Coffee"
 
-#: prefs.js:474
+#: prefs.js:486
 msgid "Support via BuyMeACoffee"
 msgstr "Unterstützung über BuyMeACoffee"
 
-#: prefs.js:482
+#: prefs.js:494
 msgid "Source Code"
 msgstr "Quellcode"
 
-#: prefs.js:483
+#: prefs.js:495
 msgid "Report bugs or view source on GitHub"
 msgstr "Fehler melden oder Code auf GitHub ansehen"
 

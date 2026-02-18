@@ -339,6 +339,12 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
 
         // Size Groups
         const dockDimGroup = new Adw.PreferencesGroup({ title: _('Dimensions (Dock Mode)') });
+        const dockArtSizeRow = new Adw.SpinRow({
+            title: _('Album Art Size'),
+            adjustment: new Gtk.Adjustment({ lower: 16, upper: 48, step_increment: 1 })
+        });
+        settings.bind('dock-art-size', dockArtSizeRow, 'value', Gio.SettingsBindFlags.DEFAULT);
+        dockDimGroup.add(dockArtSizeRow);
         const dockWidthRow = new Adw.SpinRow({
             title: _('Widget Width'),
             adjustment: new Gtk.Adjustment({ lower: 100, upper: 600, step_increment: 10 })
@@ -355,6 +361,12 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         posGroup.add(dockDimGroup);
 
         const panelDimGroup = new Adw.PreferencesGroup({ title: _('Dimensions (Panel Mode)') });
+        const panelArtSizeRow = new Adw.SpinRow({
+            title: _('Album Art Size'),
+            adjustment: new Gtk.Adjustment({ lower: 14, upper: 32, step_increment: 1 })
+        });
+        settings.bind('panel-art-size', panelArtSizeRow, 'value', Gio.SettingsBindFlags.DEFAULT);
+        panelDimGroup.add(panelArtSizeRow);
         const panelWidthRow = new Adw.SpinRow({
             title: _('Widget Width'),
             adjustment: new Gtk.Adjustment({ lower: 100, upper: 600, step_increment: 10 })
@@ -423,13 +435,13 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
             const keys = [
                 'scroll-text', 'show-album-art', 'fix-dock-autohide', 'enable-shadow',
                 'shadow-blur', 'shadow-opacity', 'pill-width', 'panel-pill-width',
-                'pill-height', 'art-size', 'panel-pill-height', 'panel-art-size',
+                'pill-height', 'panel-pill-height', 'panel-art-size',
                 'vertical-offset', 'horizontal-offset', 'position-mode', 'dock-position',
                 'target-container', 'enable-gamemode', 'visualizer-style', 'border-radius',
                 'enable-transparency', 'transparency-strength', 'transparency-art',
                 'transparency-text', 'transparency-vis',
                 'action-left-click', 'action-middle-click', 'action-right-click',
-                
+                'dock-art-size','panel-art-size',          
                 'popup-enable-shadow', 'popup-follow-transparency', 'popup-follow-radius'
             ];
             keys.forEach(k => settings.reset(k));

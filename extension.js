@@ -925,6 +925,7 @@ class MusicPill extends St.Widget {
     this._settings.connect('changed::art-size', () => this._updateDimensions());
     this._settings.connect('changed::panel-pill-height', () => this._updateDimensions());
     this._settings.connect('changed::panel-art-size', () => this._updateDimensions());
+    this._settings.connect('changed::dock-art-size', () => this._updateDimensions());
     this._settings.connect('changed::panel-pill-width', () => this._updateDimensions());
     this._settings.connect('changed::vertical-offset', () => this._updateDimensions());
     this._settings.connect('changed::horizontal-offset', () => this._updateDimensions());
@@ -1033,7 +1034,7 @@ class MusicPill extends St.Widget {
         } else {
             width = this._settings.get_int('pill-width');
             height = this._settings.get_int('pill-height');
-            prefArtSize = this._settings.get_int('art-size');
+            prefArtSize = this._settings.get_int('dock-art-size');
         }
 
         let vOffset = this._settings.get_int('vertical-offset');

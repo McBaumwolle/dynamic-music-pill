@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dynamic Music Pill\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 18:35+0100\n"
+"POT-Creation-Date: 2026-02-18 02:45+0100\n"
 "PO-Revision-Date: 2026-02-17 00:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
@@ -278,31 +278,36 @@ msgstr "Mozgatás Balra (-) vagy Jobbra (+)"
 msgid "Dimensions (Dock Mode)"
 msgstr "Méretek (Dokk Mód)"
 
-#: prefs.js:343 prefs.js:359
+#: prefs.js:343 prefs.js:365
+#, fuzzy
+msgid "Album Art Size"
+msgstr "Albumborító megjelenítése"
+
+#: prefs.js:349 prefs.js:371
 msgid "Widget Width"
 msgstr "Widget Szélessége"
 
-#: prefs.js:350 prefs.js:366
+#: prefs.js:356 prefs.js:378
 msgid "Widget Height"
 msgstr "Widget Magassága"
 
-#: prefs.js:357
+#: prefs.js:363
 msgid "Dimensions (Panel Mode)"
 msgstr "Méretek (Panel Mód)"
 
-#: prefs.js:381
+#: prefs.js:393
 msgid "System & Reset"
 msgstr ""
 
-#: prefs.js:385
+#: prefs.js:397
 msgid "System"
 msgstr ""
 
-#: prefs.js:387
+#: prefs.js:399
 msgid "Fix Dock Auto-hide"
 msgstr "Dokk automatikus elrejtés javítása"
 
-#: prefs.js:388
+#: prefs.js:400
 msgid ""
 "WARNING! Use it only if you have problem, keeps a 1px invisible spacer to "
 "prevent Dash-to-Dock from collapsing"
@@ -310,59 +315,59 @@ msgstr ""
 "FIGYELEM! Csak probléma esetén használd: egy 1px-es láthatatlan távtartót "
 "tart fenn, hogy a Dash-to-Dock ne omoljon össze"
 
-#: prefs.js:399
+#: prefs.js:411
 msgid "Game Mode"
 msgstr "Játék Mód"
 
-#: prefs.js:400
+#: prefs.js:412
 msgid "Disable animations when a fullscreen app is active"
 msgstr "Animációk tiltása teljes képernyős alkalmazásnál"
 
-#: prefs.js:411
+#: prefs.js:423
 msgid "Danger Zone"
 msgstr "Veszélyzóna"
 
-#: prefs.js:413
+#: prefs.js:425
 msgid "Factory Reset"
 msgstr "Gyári visszaállítás"
 
-#: prefs.js:414
+#: prefs.js:426
 msgid "Reset all configuration options to defaults"
 msgstr "Minden beállítás visszaállítása alapértelmezettre"
 
-#: prefs.js:417
+#: prefs.js:429
 msgid "Reset All"
 msgstr "Minden Visszaállítása"
 
-#: prefs.js:456
+#: prefs.js:468
 msgid "About"
 msgstr "Névjegy"
 
-#: prefs.js:461
+#: prefs.js:473
 msgid "Support the Project"
 msgstr "A Projekt Támogatása"
 
-#: prefs.js:464
+#: prefs.js:476
 msgid "Support on Ko-fi"
 msgstr "Támogatás Ko-fi-n"
 
-#: prefs.js:465
+#: prefs.js:477
 msgid "Buy me a coffee on Ko-fi"
 msgstr "Hívj meg egy kávéra Ko-fi-n"
 
-#: prefs.js:473
+#: prefs.js:485
 msgid "Buy Me a Coffee"
 msgstr "Buy Me a Coffee"
 
-#: prefs.js:474
+#: prefs.js:486
 msgid "Support via BuyMeACoffee"
 msgstr "Támogatás BuyMeACoffee-n keresztül"
 
-#: prefs.js:482
+#: prefs.js:494
 msgid "Source Code"
 msgstr "Forráskód"
 
-#: prefs.js:483
+#: prefs.js:495
 msgid "Report bugs or view source on GitHub"
 msgstr "Hibajelentés vagy kód megtekintése GitHubon"
 
