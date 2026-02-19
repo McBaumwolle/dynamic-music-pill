@@ -6,8 +6,8 @@ import GLib from 'gi://GLib';
 
 export default class DynamicMusicPrefs extends ExtensionPreferences {
     fillPreferencesWindow(window) {
-        this.initTranslations();
-        const settings = this.getSettings('org.gnome.shell.extensions.dynamic-music-pill');
+        // 1 & 2 pont: Nincs initTranslations() és paraméter a getSettings-ben
+        const settings = this.getSettings();
         const PREFS_KEYS = [
             'scroll-text', 'show-album-art', 'enable-shadow', 'hide-default-player',
             'shadow-blur', 'shadow-opacity', 'pill-width', 'panel-pill-width',
@@ -122,7 +122,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
 
 
         // =========================================
-        // 2. POP-UP MENU PAGE (ÚJ!)
+        // 2. POP-UP MENU PAGE
         // =========================================
         const popupPage = new Adw.PreferencesPage({
             title: _('Pop-up Menu'),
@@ -142,7 +142,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         popRotateRow.add_suffix(popRotateToggle);
         popupGroup.add(popRotateRow);
 
-        // Shadow Toggle
         const popShadowRow = new Adw.ActionRow({
             title: _('Enable Shadow'),
             subtitle: _('Show drop shadow behind the pop-up menu')
@@ -155,7 +154,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         popShadowRow.add_suffix(popShadowToggle);
         popupGroup.add(popShadowRow);
 
-        // Follow Transparency
         const popTransRow = new Adw.ActionRow({
             title: _('Follow Transparency'),
             subtitle: _('Inherit opacity settings from the main pill')
@@ -168,7 +166,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         popTransRow.add_suffix(popTransToggle);
         popupGroup.add(popTransRow);
 
-        // Follow Radius
         const popRadRow = new Adw.ActionRow({
             title: _('Follow Border Radius'),
             subtitle: _('Inherit corner roundness from the main pill')
@@ -193,7 +190,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
             icon_name: 'applications-graphics-symbolic'
         });
 
-        // Appearance Group (Visualizer & Radius)
         const lookGroup = new Adw.PreferencesGroup({ title: _('Visualizer and Shape') });
         
         const visModel = new Gtk.StringList();
@@ -226,9 +222,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         lookGroup.add(radiusRow);
         stylePage.add(lookGroup);
 
-        // Transparency Group
         const transGroup = new Adw.PreferencesGroup({ title: _('Background and Transparency') });
-        
         const transRow = new Adw.ActionRow({
             title: _('Enable Transparency'),
             subtitle: _('Switch between a solid theme background and a custom transparent look')
@@ -270,10 +264,8 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         settings.bind('enable-transparency', transVisRow, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
         transVisRow.add_suffix(transVisToggle);
         transGroup.add(transVisRow);
-        
         stylePage.add(transGroup);
 
-        // Shadow Group (Main Pill)
         const shadowGroup = new Adw.PreferencesGroup({ title: _('Main Pill Shadow') });
         const shadowRow = new Adw.ActionRow({ title: _('Enable Shadow') });
         const shadowToggle = new Gtk.Switch({ active: settings.get_boolean('enable-shadow'), valign: Gtk.Align.CENTER });
@@ -296,9 +288,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         shadowGroup.add(shadowBlurRow);
         stylePage.add(shadowGroup);
 
-        // Positioning Group
         const posGroup = new Adw.PreferencesGroup({ title: _('Positioning') });
-        
         const targetModel = new Gtk.StringList();
         targetModel.append(_("Dock"));
         targetModel.append(_("Panel: Left Box"));
@@ -357,7 +347,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         settings.bind('horizontal-offset', hOffsetRow, 'value', Gio.SettingsBindFlags.DEFAULT);
         posGroup.add(hOffsetRow);
 
-        // Size Groups
         const dockDimGroup = new Adw.PreferencesGroup({ title: _('Dimensions (Dock Mode)') });
         const dockArtSizeRow = new Adw.SpinRow({
             title: _('Album Art Size'),
@@ -405,7 +394,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         stylePage.add(posGroup);
         window.add(stylePage);
 
-
         // =========================================
         // 4. SYSTEM & RESET PAGE
         // =========================================
@@ -451,7 +439,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
                         let bytes = new GLib.Bytes(new TextEncoder().encode(JSON.stringify(data, null, 2)));
                         file.replace_contents_bytes_async(bytes, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null, null);
                     }
-                } catch (e) {}
+                } catch (e) { console.error(e); }
             });
         });
         exportRow.add_suffix(exportBtn);
@@ -478,10 +466,10 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
                                         }
                                     });
                                 }
-                            } catch (e) {}
+                            } catch (e) { console.error(e); }
                         });
                     }
-                } catch (e) {}
+                } catch (e) { console.error(e); }
             });
         });
         importRow.add_suffix(importBtn);
@@ -497,7 +485,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         otherPage.add(resetGroup);
 
         window.add(otherPage);
-
 
         // =========================================
         // 5. ABOUT PAGE
@@ -540,7 +527,6 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         aboutPage.add(supportGroup);
         window.add(aboutPage);
 
-        // Logic for hiding/showing dock/panel options
         function updateGroupVisibility(targetVal) {
             if (targetVal === 0) {
                 dockDimGroup.set_visible(true);
