@@ -1340,13 +1340,13 @@ class MusicPill extends St.Widget {
     if (!this.get_parent()) return;
 
 
-    console.log(`[MusicPill DEBUG] Frissítés - Cím: ${title} | Art: ${artUrl ? 'VAN' : 'NINCS'} | Busz: ${busName}`);
+    //console.log(`[MusicPill DEBUG] Frissítés - Cím: ${title} | Art: ${artUrl ? 'VAN' : 'NINCS'} | Busz: ${busName}`);
 
     this._currentStatus = status;
     let forceUpdate = false;
 
     if (this._currentBusName !== busName) {
-        console.log(`[MusicPill DEBUG] Lejátszó váltás történt: ${this._currentBusName} -> ${busName}`);
+        //console.log(`[MusicPill DEBUG] Lejátszó váltás történt: ${this._currentBusName} -> ${busName}`);
         this._currentBusName = busName;
         this._lastTitle = null;
         this._lastArtist = null;
@@ -1402,7 +1402,7 @@ class MusicPill extends St.Widget {
 
 
     if (!this._isActiveState || this.opacity === 0 || this.width <= 1) {
-        console.log(`[MusicPill DEBUG] Pill kényszerített megjelenítése.`);
+        //console.log(`[MusicPill DEBUG] Pill kényszerített megjelenítése.`);
         this._isActiveState = true;
         this.reactive = true;
         this.visible = true;
@@ -1439,7 +1439,7 @@ class MusicPill extends St.Widget {
 
 
     if (forceUpdate || artUrl !== this._lastArtUrl) {
-        console.log(`[MusicPill DEBUG] Kép frissítése: ${artUrl}`);
+        //console.log(`[MusicPill DEBUG] Kép frissítése: ${artUrl}`);
         this._lastArtUrl = artUrl;
 
         if (artUrl) {
@@ -1453,7 +1453,7 @@ class MusicPill extends St.Widget {
             this._artWidget.setArt(artUrl, true);
             this._loadColorFromArt(artUrl);
         } else {
-            console.log(`[MusicPill DEBUG] Nincs kép, indítom az art visibility kezelőt.`);
+            //console.log(`[MusicPill DEBUG] Nincs kép, indítom az art visibility kezelőt.`);
             this._updateArtVisibility();
         }
     } else {
