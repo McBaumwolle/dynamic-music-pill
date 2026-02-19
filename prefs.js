@@ -2,11 +2,24 @@ import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/
 import Adw from 'gi://Adw';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
+import GLib from 'gi://GLib';
 
 export default class DynamicMusicPrefs extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         this.initTranslations();
         const settings = this.getSettings('org.gnome.shell.extensions.dynamic-music-pill');
+        const PREFS_KEYS = [
+            'scroll-text', 'show-album-art', 'enable-shadow', 'hide-default-player',
+            'shadow-blur', 'shadow-opacity', 'pill-width', 'panel-pill-width',
+            'pill-height', 'panel-pill-height', 'vertical-offset', 'horizontal-offset', 
+            'position-mode', 'dock-position', 'target-container', 'enable-gamemode', 
+            'visualizer-style', 'border-radius', 'enable-transparency', 'transparency-strength', 
+            'transparency-art', 'transparency-text', 'transparency-vis', 'invert-scroll-animation', 
+            'enable-scroll-controls', 'action-left-click', 'action-middle-click', 
+            'action-right-click', 'action-double-click', 'dock-art-size', 'panel-art-size',          
+            'popup-enable-shadow', 'popup-follow-transparency', 'popup-follow-radius', 
+            'popup-vinyl-rotate', 'visualizer-padding'
+        ];
 
         // =========================================
         // 1. MAIN PILL PAGE (General & Controls)
@@ -196,6 +209,13 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         });
         visRow.connect('notify::selected', () => { settings.set_int('visualizer-style', visRow.selected); });
         lookGroup.add(visRow);
+        const visPaddingRow = new Adw.SpinRow({
+            title: _('Visualizer Margin'),
+            subtitle: _('Distance between the text and the wave animation'),
+            adjustment: new Gtk.Adjustment({ lower: 0, upper: 50, step_increment: 1 })
+        });
+        settings.bind('visualizer-padding', visPaddingRow, 'value', Gio.SettingsBindFlags.DEFAULT);
+        lookGroup.add(visPaddingRow);
 
         const radiusRow = new Adw.SpinRow({
             title: _('Corner Radius'),
@@ -395,69 +415,87 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         });
         
         const compatGroup = new Adw.PreferencesGroup({ title: _('System') });
-        const fixRow = new Adw.ActionRow({
-            title: _('Fix Dock Auto-hide'),
-            subtitle: _('WARNING! Use it only if you have problem, keeps a 1px invisible spacer to prevent Dash-to-Dock from collapsing')
+        
+        const hidePlayerRow = new Adw.ActionRow({
+            title: _('Hide Default GNOME Player'),
+            subtitle: _('Remove the duplicate built-in media controls')
         });
-        const fixToggle = new Gtk.Switch({
-            active: settings.get_boolean('fix-dock-autohide'),
+        const hidePlayerToggle = new Gtk.Switch({
+            active: settings.get_boolean('hide-default-player'),
             valign: Gtk.Align.CENTER
         });
-        settings.bind('fix-dock-autohide', fixToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
-        fixRow.add_suffix(fixToggle);
-        compatGroup.add(fixRow);
+        settings.bind('hide-default-player', hidePlayerToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+        hidePlayerRow.add_suffix(hidePlayerToggle);
+        compatGroup.add(hidePlayerRow);
 
-        const gameRow = new Adw.ActionRow({
-            title: _('Game Mode'),
-            subtitle: _('Disable animations when a fullscreen app is active')
-        });
-        const gameToggle = new Gtk.Switch({
-            active: settings.get_boolean('enable-gamemode'),
-            valign: Gtk.Align.CENTER
-        });
+        const gameRow = new Adw.ActionRow({ title: _('Game Mode'), subtitle: _('Disable animations when a fullscreen app is active') });
+        const gameToggle = new Gtk.Switch({ active: settings.get_boolean('enable-gamemode'), valign: Gtk.Align.CENTER });
         settings.bind('enable-gamemode', gameToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
         gameRow.add_suffix(gameToggle);
         compatGroup.add(gameRow);
         otherPage.add(compatGroup);
 
+        const backupGroup = new Adw.PreferencesGroup({ title: _('Backup & Restore') });
+        
+        // EXPORT
+        const exportRow = new Adw.ActionRow({ title: _('Export Settings') });
+        const exportBtn = new Gtk.Button({ label: _('Export'), valign: Gtk.Align.CENTER });
+        exportBtn.connect('clicked', () => {
+            let data = {};
+            PREFS_KEYS.forEach(k => { data[k] = settings.get_value(k).deep_unpack(); });
+            let dialog = new Gtk.FileDialog({ title: _('Save Settings'), initial_name: 'music-pill-backup.json' });
+            dialog.save(null, null, (dlg, res) => {
+                try {
+                    let file = dlg.save_finish(res);
+                    if (file) {
+                        let bytes = new GLib.Bytes(new TextEncoder().encode(JSON.stringify(data, null, 2)));
+                        file.replace_contents_bytes_async(bytes, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null, null);
+                    }
+                } catch (e) {}
+            });
+        });
+        exportRow.add_suffix(exportBtn);
+        backupGroup.add(exportRow);
+
+        // IMPORT
+        const importRow = new Adw.ActionRow({ title: _('Import Settings') });
+        const importBtn = new Gtk.Button({ label: _('Import'), valign: Gtk.Align.CENTER });
+        importBtn.connect('clicked', () => {
+            let dialog = new Gtk.FileDialog({ title: _('Open Settings Backup') });
+            dialog.open(null, null, (dlg, res) => {
+                try {
+                    let file = dlg.open_finish(res);
+                    if (file) {
+                        file.load_contents_async(null, (f, r) => {
+                            try {
+                                let [ok, contents] = f.load_contents_finish(r);
+                                if (ok) {
+                                    let data = JSON.parse(new TextDecoder().decode(contents));
+                                    PREFS_KEYS.forEach(k => {
+                                        if (data[k] !== undefined) {
+                                            let type = settings.get_default_value(k).get_type_string();
+                                            settings.set_value(k, new GLib.Variant(type, data[k]));
+                                        }
+                                    });
+                                }
+                            } catch (e) {}
+                        });
+                    }
+                } catch (e) {}
+            });
+        });
+        importRow.add_suffix(importBtn);
+        backupGroup.add(importRow);
+        otherPage.add(backupGroup);
+
         const resetGroup = new Adw.PreferencesGroup({ title: _('Danger Zone') });
-        const resetRow = new Adw.ActionRow({
-            title: _('Factory Reset'),
-            subtitle: _('Reset all configuration options to defaults')
-        });
-        const resetBtn = new Gtk.Button({
-            label: _('Reset All'),
-            valign: Gtk.Align.CENTER,
-            css_classes: ['destructive-action']
-        });
-
-        resetBtn.connect('clicked', () => {
-            const keys = [
-                'scroll-text', 'show-album-art', 'fix-dock-autohide', 'enable-shadow',
-                'shadow-blur', 'shadow-opacity', 'pill-width', 'panel-pill-width',
-                'pill-height', 'panel-pill-height', 'panel-art-size',
-                'vertical-offset', 'horizontal-offset', 'position-mode', 'dock-position',
-                'target-container', 'enable-gamemode', 'visualizer-style', 'border-radius',
-                'enable-transparency', 'transparency-strength', 'transparency-art',
-                'transparency-text', 'transparency-vis',
-                'action-left-click', 'action-middle-click', 'action-right-click',
-                'dock-art-size','panel-art-size',          
-                'popup-enable-shadow', 'popup-follow-transparency', 'popup-follow-radius'
-            ];
-            keys.forEach(k => settings.reset(k));
-
-            visRow.selected = settings.get_int('visualizer-style');
-            modeRow.selected = settings.get_int('position-mode');
-            targetRow.selected = settings.get_int('target-container');
-            leftRow.selected = actionValues.indexOf(settings.get_string('action-left-click'));
-            midRow.selected = actionValues.indexOf(settings.get_string('action-middle-click'));
-            rightRow.selected = actionValues.indexOf(settings.get_string('action-right-click'));
-            updateGroupVisibility(targetRow.selected);
-        });
-
+        const resetBtn = new Gtk.Button({ label: _('Reset All'), valign: Gtk.Align.CENTER, css_classes: ['destructive-action'] });
+        resetBtn.connect('clicked', () => { PREFS_KEYS.forEach(k => settings.reset(k)); });
+        const resetRow = new Adw.ActionRow({ title: _('Factory Reset') });
         resetRow.add_suffix(resetBtn);
         resetGroup.add(resetRow);
         otherPage.add(resetGroup);
+
         window.add(otherPage);
 
 

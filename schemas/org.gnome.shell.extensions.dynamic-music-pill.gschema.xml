@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.dynamic-music-pill" path="/org/gnome/shell/extensions/dynamic-music-pill/" gettext-domain="dynamic-music-pill">
-  <key name="popup-vinyl-rotate" type="b">
+    <key name="visualizer-padding" type="i">
+      <default>12</default>
+      <summary>Visualizer Margin</summary>
+      <description>Spacing between the text and the visualizer.</description>
+    </key>
+    <key name="popup-vinyl-rotate" type="b">
       <default>true</default>
       <summary>Rotate Vinyl in Pop-up</summary>
     </key>
-  <key name="popup-enable-shadow" type="b">
+    <key name="popup-enable-shadow" type="b">
       <default>true</default>
       <summary>Enable shadow for the pop-up menu</summary>
     </key>
@@ -26,10 +31,12 @@
       <default>22</default>
       <summary>Album Art size in Panel mode</summary>
     </key>
-    <key name="fix-dock-autohide" type="b">
-      <default>false</default>
-      <summary>Fix Dock Autohide</summary>
+    
+    <key name="hide-default-player" type="b">
+      <default>true</default>
+      <summary>Hide Default GNOME Player</summary>
     </key>
+
     <key name="scroll-text" type="b">
       <default>true</default>
       <summary>Scrolling Text</summary>
@@ -145,6 +152,5 @@
       <default>'next'</default>
       <summary>Double Click Action</summary>
     </key>
-
   </schema>
 </schemalist>
