@@ -910,12 +910,14 @@ class ExpandedPlayer extends St.Widget {
             }
 
 
-            if (Math.abs(targetX - currentX) < 40) {
+            let isCurrentlySafe = (currentX >= monitor.x + 10 && (currentX + menuW) <= (monitor.x + monitor.width - 10));
+
+            if (isCurrentlySafe && Math.abs(targetX - currentX) < 40) {
                 targetX = currentX;
-            }
-            if (Math.abs(targetY - currentY) < 40) {
+               }
+            if (isCurrentlySafe && Math.abs(targetY - currentY) < 40) {
                 targetY = currentY;
-            }
+               }
 
 
             if (currentW === menuW && currentX === targetX && currentY === targetY) {
@@ -1685,6 +1687,8 @@ export default class DynamicMusicExtension extends Extension {
         let startW = 320;
         let startH = 260;
         let startX = px + (pw / 2) - (startW / 2);
+        if (startX < monitor.x + 10) startX = monitor.x + 10;
+        else if (startX + startW > monitor.x + monitor.width - 10) startX = monitor.x + monitor.width - startW - 10;
         let startY = py > monitor.y + (monitor.height / 2) ? py - startH - 15 : py + ph + 15;
         this._expandedPlayer.setPosition(startX, startY);
 
