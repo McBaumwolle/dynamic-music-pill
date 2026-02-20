@@ -14,7 +14,7 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
  [![Stars](https://img.shields.io/github/stars/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/stargazers) [![Watchers](https://img.shields.io/github/watchers/Andbal23/dynamic-music-pill?style=social)](https://github.com/Andbal23/dynamic-music-pill/watchers) [![Translation status](https://hosted.weblate.org/widgets/dynamic-music-pill/-/svg-badge.svg)](https://hosted.weblate.org/engage/dynamic-music-pill/)
 </div>
 
----andbal
+---
 ## ✨ Features
 
 * **Dual Placement:** Supports both **Dash** and the **Panel** (Left, Center, and Right sections).andbal
