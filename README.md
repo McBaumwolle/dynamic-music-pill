@@ -139,7 +139,7 @@ After compilation, restart the shell to apply the changes:
 * **X11:** Press `Alt+F2`, type `r`, and hit `Enter`.
 * **Wayland:** Log out and log back in.
 ---
-# Help Translate!
+# 🌍 Help Translate!
 
 I want to make **Dynamic Music Pill** available to everyone in their native language! If you'd like to help translate the extension, you can easily do so via our translation platform. No coding skills required!
 
