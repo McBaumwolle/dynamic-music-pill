@@ -18,7 +18,7 @@ A dynamic, elegant, and highly customizable music widget for GNOME Shell. It bri
 ## ✨ Features
 
 * **Dual Placement:** Supports both **Dash** and the **Panel** (Left, Center, and Right sections).
-* * **Pop-Up Menu:** You can seek into the track from the Pop-Up Menu and more.
+* **Pop-Up Menu:** You can seek into the track from the Pop-Up Menu and more.
 * **Adaptive Colors:** The widget's background and visualizer colors automatically adapt to the current track's album art.
 * **Live Visualizer:** Real-time waveform or beat animation that reacts to your music.
 * **🎮 Game Mode:** Automatically stop the visual and the scrolling when a fullscreen application is active to ensure maximum performance (FPS).
