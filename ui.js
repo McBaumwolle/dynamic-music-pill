@@ -400,6 +400,10 @@ class ExpandedPlayer extends St.Widget {
         this._box.add_child(progressBox);
 
         let controlsRow = new St.BoxLayout({ style_class: 'controls-row', vertical: false, x_align: Clutter.ActorAlign.CENTER, reactive: true });
+        
+        this._shuffleIcon = new St.Icon({ icon_name: 'media-playlist-shuffle-symbolic', icon_size: 20 });
+        let shuffleBtn = new St.Button({ style_class: 'control-btn', child: this._shuffleIcon, reactive: true, can_focus: true });
+        shuffleBtn.connectObject('button-release-event', () => { this._controller.toggleShuffle(); return Clutter.EVENT_STOP; }, this);
 
         let prevBtn = new St.Button({ style_class: 'control-btn', child: new St.Icon({ icon_name: 'media-skip-backward-symbolic', icon_size: 20 }), reactive: true, can_focus: true });
         prevBtn.connectObject('button-release-event', () => { this._controller.previous(); return Clutter.EVENT_STOP; }, this);
@@ -410,10 +414,16 @@ class ExpandedPlayer extends St.Widget {
 
         let nextBtn = new St.Button({ style_class: 'control-btn', child: new St.Icon({ icon_name: 'media-skip-forward-symbolic', icon_size: 20 }), reactive: true, can_focus: true });
         nextBtn.connectObject('button-release-event', () => { this._controller.next(); return Clutter.EVENT_STOP; }, this);
-
+        
+        this._repeatIcon = new St.Icon({ icon_name: 'media-playlist-repeat-symbolic', icon_size: 20 });
+        let repeatBtn = new St.Button({ style_class: 'control-btn', child: this._repeatIcon, reactive: true, can_focus: true });
+        repeatBtn.connectObject('button-release-event', () => { this._controller.toggleLoop(); return Clutter.EVENT_STOP; }, this);
+	
+	controlsRow.add_child(shuffleBtn);
         controlsRow.add_child(prevBtn);
         controlsRow.add_child(playPauseBtn);
         controlsRow.add_child(nextBtn);
+        controlsRow.add_child(repeatBtn);
         this._box.add_child(controlsRow);
     }
 
@@ -536,6 +546,28 @@ class ExpandedPlayer extends St.Widget {
 
         if (this.visible && trackChanged) {
             this.animateResize();
+        }
+        
+        if (this._player) {
+            let shuffle = this._player.Shuffle;
+            let loop = this._player.LoopStatus;
+
+            if (this._shuffleIcon && shuffle !== undefined) {
+                this._shuffleIcon.opacity = shuffle ? 255 : 100;
+            }
+
+            if (this._repeatIcon && loop !== undefined) {
+                if (loop === 'Track') {
+                    this._repeatIcon.icon_name = 'media-playlist-repeat-song-symbolic';
+                    this._repeatIcon.opacity = 255;
+                } else if (loop === 'Playlist') {
+                    this._repeatIcon.icon_name = 'media-playlist-repeat-symbolic';
+                    this._repeatIcon.opacity = 255;
+                } else {
+                    this._repeatIcon.icon_name = 'media-playlist-repeat-symbolic';
+                    this._repeatIcon.opacity = 100;
+                }
+            }
         }
     }
 
