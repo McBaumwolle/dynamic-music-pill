@@ -27,6 +27,42 @@
       <default>true</default>
       <summary>Pop-up inherits border radius</summary>
     </key>
+    <key name="popup-vinyl-square" type="b">
+      <default>false</default>
+      <summary>Square Vinyl (No Rotation)</summary>
+    </key>
+    <key name="popup-show-vinyl" type="b">
+      <default>true</default>
+      <summary>Show Vinyl in Pop-up</summary>
+    </key>
+
+    <key name="show-shuffle-loop" type="b">
+      <default>true</default>
+      <summary>Show Shuffle and Loop buttons</summary>
+    </key>
+
+    <key name="use-custom-colors" type="b">
+      <default>false</default>
+      <summary>Use Custom Colors</summary>
+    </key>
+    <key name="custom-bg-color" type="s">
+      <default>'40,40,40'</default>
+      <summary>Custom Background Color (R,G,B)</summary>
+    </key>
+    <key name="custom-text-color" type="s">
+      <default>'255,255,255'</default>
+      <summary>Custom Text Color (R,G,B)</summary>
+    </key>
+
+    <key name="tablet-mode" type="b">
+      <default>false</default>
+      <summary>Tablet Mode (Show skip buttons on pill)</summary>
+    </key>
+
+    <key name="inline-artist" type="b">
+      <default>true</default>
+      <summary>Append artist to title when squeezed</summary>
+    </key>
 
     <key name="dock-art-size" type="i">
       <default>44</default>
