@@ -47,7 +47,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         // Scroll Controls
         const scrollCtrlRow = new Adw.ActionRow({
             title: _('Enable Scroll Controls'),
-            subtitle: _('Change Tracks or Volume  using scroll wheel or touchpad')
+            subtitle: _('Change Tracks or Volume using scroll wheel or touchpad')
         });
         const scrollCtrlToggle = new Gtk.Switch({
             active: settings.get_boolean('enable-scroll-controls'),
