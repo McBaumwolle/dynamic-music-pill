@@ -76,6 +76,8 @@ export class MusicController {
             '/org/freedesktop/DBus', null, Gio.DBusSignalFlags.NONE, () => this._scan()
         );
         this._scan();
+        this._settings.connectObject('changed::player-filter-mode', () => this._scan(), this);
+	this._settings.connectObject('changed::player-filter-list', () => this._scan(), this);
 
         this._watchdog = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 5, () => {
             this._monitorGameMode();
@@ -317,7 +319,7 @@ export class MusicController {
                 try {
                     let r = smartUnpack(c.call_finish(res));
                     let names = Array.isArray(r[0]) ? r[0] : (Array.isArray(r) ? r : []);
-                    let mprisNames = names.filter(n => n.startsWith('org.mpris.MediaPlayer2.'));
+                    let mprisNames = names.filter(n => n.startsWith('org.mpris.MediaPlayer2.') && this._isPlayerAllowed(n));
 
                     let changed = false;
 
@@ -424,7 +426,10 @@ export class MusicController {
             GLib.source_remove(this._updateTimeoutId);
         }
 
-        this._updateTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
+        let useDelay = this._settings ? this._settings.get_boolean('compatibility-delay') : false;
+        let delay = useDelay ? 800 : 100;
+
+        this._updateTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, () => {
             this._updateUI();
             this._updateTimeoutId = null;
             return GLib.SOURCE_REMOVE;
@@ -477,6 +482,16 @@ export class MusicController {
             } else {
                 artUrl = null;
             }
+            
+            if (!artUrl) {
+                let fallbackPath = this._settings ? this._settings.get_string('fallback-art-path') : '';
+                if (fallbackPath && fallbackPath.trim() !== '') {
+                    let file = Gio.File.new_for_path(fallbackPath);
+                    if (file.query_exists(null)) {
+                        artUrl = file.get_uri();
+                    }
+                }
+            }
 
             if (!artUrl && active.PlaybackStatus === 'Playing' && !this._retryArtTimer) {
                 this._retryArtTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
@@ -496,6 +511,23 @@ export class MusicController {
             this._pill.updateDisplay(null, null, null, 'Stopped', null, false);
         }
     }
+    
+	    _isPlayerAllowed(busName) {
+	    let mode = this._settings.get_int('player-filter-mode');
+	    if (mode === 0) return true;
+
+	    let listStr = this._settings.get_string('player-filter-list').toLowerCase();
+	    let list = listStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
+	    
+	    if (list.length === 0) return mode === 1;
+
+	    let lowerName = busName.toLowerCase();
+	    let match = list.some(item => lowerName.includes(item));
+
+	    if (mode === 1) return !match;
+	    if (mode === 2) return match;
+	    return true;
+	}
 
     _getActivePlayer() {
         let proxiesArr = Array.from(this._proxies.values());
