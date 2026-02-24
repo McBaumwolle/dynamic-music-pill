@@ -18,7 +18,7 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
             'enable-scroll-controls', 'action-left-click', 'action-middle-click', 
             'action-right-click', 'action-double-click', 'dock-art-size', 'panel-art-size',          
             'popup-enable-shadow', 'popup-follow-transparency', 'popup-follow-radius', 
-            'popup-vinyl-rotate', 'visualizer-padding', 'scroll-action','popup-vinyl-square', 'popup-show-vinyl', 'show-shuffle-loop', 'use-custom-colors', 'custom-bg-color', 'custom-text-color', 'tablet-mode', 'inline-artist'
+            'popup-vinyl-rotate', 'visualizer-padding', 'scroll-action','popup-vinyl-square', 'popup-show-		vinyl', 'show-shuffle-loop', 'use-custom-colors', 'custom-bg-color', 'custom-text-color', 'tablet-mode', 'inline-artist','pill-dynamic-width', 'popup-use-custom-width', 'popup-custom-width'
         ];
 
         // =========================================
@@ -109,16 +109,16 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
         genGroup.add(scrollTextRow);
         
         const tabletModeRow = new Adw.ActionRow({ title: _('Tablet Mode'), subtitle: _('Show skip buttons directly on the pill') });
-const tabletModeToggle = new Gtk.Switch({ active: settings.get_boolean('tablet-mode'), valign: Gtk.Align.CENTER });
-settings.bind('tablet-mode', tabletModeToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
-tabletModeRow.add_suffix(tabletModeToggle);
-genGroup.add(tabletModeRow);
+	const tabletModeToggle = new Gtk.Switch({ active: settings.get_boolean('tablet-mode'), valign: Gtk.Align.CENTER });
+	settings.bind('tablet-mode', tabletModeToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+	tabletModeRow.add_suffix(tabletModeToggle);
+	genGroup.add(tabletModeRow);
 
-const inlineArtistRow = new Adw.ActionRow({ title: _('Inline Artist'), subtitle: _('Show "Title • Artist" when the widget is squeezed') });
-const inlineArtistToggle = new Gtk.Switch({ active: settings.get_boolean('inline-artist'), valign: Gtk.Align.CENTER });
-settings.bind('inline-artist', inlineArtistToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
-inlineArtistRow.add_suffix(inlineArtistToggle);
-genGroup.add(inlineArtistRow);
+	const inlineArtistRow = new Adw.ActionRow({ title: _('Inline Artist'), subtitle: _('Show "Title • Artist" when the widget is squeezed') });
+	const inlineArtistToggle = new Gtk.Switch({ active: settings.get_boolean('inline-artist'), valign: Gtk.Align.CENTER });
+	settings.bind('inline-artist', inlineArtistToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+	inlineArtistRow.add_suffix(inlineArtistToggle);
+	genGroup.add(inlineArtistRow);
 
         mainPage.add(genGroup);
 
@@ -215,22 +215,48 @@ genGroup.add(inlineArtistRow);
         popRadRow.add_suffix(popRadToggle);
         popupGroup.add(popRadRow);
         const popShowRow = new Adw.ActionRow({ title: _('Show Vinyl'), subtitle: _('Display the album art in the pop-up') });
-const popShowToggle = new Gtk.Switch({ active: settings.get_boolean('popup-show-vinyl'), valign: Gtk.Align.CENTER });
-settings.bind('popup-show-vinyl', popShowToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
-popShowRow.add_suffix(popShowToggle);
-popupGroup.add(popShowRow);
+	const popShowToggle = new Gtk.Switch({ active: settings.get_boolean('popup-show-vinyl'), valign: Gtk.Align.CENTER });
+	settings.bind('popup-show-vinyl', popShowToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+	popShowRow.add_suffix(popShowToggle);
+	popupGroup.add(popShowRow);
 
-const popSquareRow = new Adw.ActionRow({ title: _('Square Vinyl Image'), subtitle: _('Use a square album art (disables rotation)') });
-const popSquareToggle = new Gtk.Switch({ active: settings.get_boolean('popup-vinyl-square'), valign: Gtk.Align.CENTER });
-settings.bind('popup-vinyl-square', popSquareToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
-popSquareRow.add_suffix(popSquareToggle);
-popupGroup.add(popSquareRow);
+	const popSquareRow = new Adw.ActionRow({ title: _('Square Vinyl Image'), subtitle: _('Use a square album art (disables rotation)') });
+	const popSquareToggle = new Gtk.Switch({ active: settings.get_boolean('popup-vinyl-square'), valign: Gtk.Align.CENTER });
+	settings.bind('popup-vinyl-square', popSquareToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+	popSquareRow.add_suffix(popSquareToggle);
+	popupGroup.add(popSquareRow);
 
-const showShuffleRow = new Adw.ActionRow({ title: _('Show Shuffle and Loop'), subtitle: _('Display extra controls in the pop-up') });
-const showShuffleToggle = new Gtk.Switch({ active: settings.get_boolean('show-shuffle-loop'), valign: Gtk.Align.CENTER });
-settings.bind('show-shuffle-loop', showShuffleToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
-showShuffleRow.add_suffix(showShuffleToggle);
-popupGroup.add(showShuffleRow);
+	const showShuffleRow = new Adw.ActionRow({ title: _('Show Shuffle and Loop'), subtitle: _('Display extra controls in the pop-up') });
+	const showShuffleToggle = new Gtk.Switch({ active: settings.get_boolean('show-shuffle-loop'), valign: Gtk.Align.CENTER });
+	settings.bind('show-shuffle-loop', showShuffleToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+	showShuffleRow.add_suffix(showShuffleToggle);
+	popupGroup.add(showShuffleRow);
+	
+	const popUseCustomRow = new Adw.ActionRow({ title: _('Use Custom Width'), subtitle: _('Disable dynamic sizing for the pop-up') });
+        const popUseCustomToggle = new Gtk.Switch({ active: settings.get_boolean('popup-use-custom-width'), valign: Gtk.Align.CENTER });
+        settings.bind('popup-use-custom-width', popUseCustomToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+        popUseCustomRow.add_suffix(popUseCustomToggle);
+        popupGroup.add(popUseCustomRow);
+
+        const popCustomWidthRow = new Adw.SpinRow({
+            title: _('Custom Width Value'),
+            adjustment: new Gtk.Adjustment({ lower: 260, upper: 800, step_increment: 10 })
+        });
+
+        const updateWidthBound = () => {
+            let limit = settings.get_boolean('show-shuffle-loop') ? 360 : 260;
+            popCustomWidthRow.adjustment.lower = limit;
+            
+            if (settings.get_int('popup-custom-width') < limit) {
+                settings.set_int('popup-custom-width', limit);
+            }
+        };
+        settings.connect('changed::show-shuffle-loop', updateWidthBound);
+        updateWidthBound();
+
+        settings.bind('popup-custom-width', popCustomWidthRow, 'value', Gio.SettingsBindFlags.DEFAULT);
+        settings.bind('popup-use-custom-width', popCustomWidthRow, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
+        popupGroup.add(popCustomWidthRow);
 
         popupPage.add(popupGroup);
         window.add(popupPage);
@@ -361,6 +387,13 @@ popupGroup.add(showShuffleRow);
             updateGroupVisibility(val);
         });
         posGroup.add(targetRow);
+        
+        const dynWidthRow = new Adw.ActionRow({ title: _('Dynamic Width'), subtitle: _('Auto-adjust pill width (slider acts as max width)') });
+        const dynWidthToggle = new Gtk.Switch({ active: settings.get_boolean('pill-dynamic-width'), valign: Gtk.Align.CENTER });
+        settings.bind('pill-dynamic-width', dynWidthToggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+        dynWidthRow.add_suffix(dynWidthToggle);
+        posGroup.add(dynWidthRow);
+        
         settings.connect('changed::target-container', () => {
             let val = settings.get_int('target-container');
             if (targetRow.selected !== val) {
