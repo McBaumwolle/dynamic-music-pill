@@ -206,9 +206,8 @@ msgid "Show Visualizer in Pop-up"
 msgstr "Visualiseur et Forme"
 
 #: prefs.js:338
-
 msgid "Hide Pill Visualizer"
-msgstr "Appliquer au visualiseur"
+msgstr ""
 
 #: prefs.js:339
 msgid "Creates a \"moving\" effect by hiding the main pill visualizer"
