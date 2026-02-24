@@ -1,4 +1,4 @@
-# Brazilian Portuguese translations for Dynamic Music Pill.
+# Russian translations for Dynamic Music Pill.
 msgid ""
 msgstr ""
 "Project-Id-Version: Dynamic Music Pill\n"
@@ -6,12 +6,13 @@ msgstr ""
 "POT-Creation-Date: 2026-02-24 22:18+0100\n"
 "PO-Revision-Date: 2026-02-17 00:00+0100\n"
 "Last-Translator: \n"
-"Language-Team: Portuguese (Brazil)\n"
-"Language: pt_BR\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: prefs.js:32
 msgid "Main Pill"
@@ -19,20 +20,20 @@ msgstr ""
 
 #: prefs.js:36
 msgid "General Settings"
-msgstr "ConfiguraÃÂ§ÃÂµes Gerais"
+msgstr "Общие настройки"
 
 #: prefs.js:40
 msgid "Show Album Art"
-msgstr "Mostrar Capa do ÃÂlbum"
+msgstr "Показывать обложку альбома"
 
 #: prefs.js:41
 msgid "Display the cover art of the currently playing song"
-msgstr "Exibir a capa da mÃÂºsica atual"
+msgstr "Отображать обложку текущей песни"
 
 #: prefs.js:52
 
 msgid "Fallback Album Art"
-msgstr "Mostrar Capa do ÃÂlbum"
+msgstr "Показывать обложку альбома"
 
 #: prefs.js:53 prefs.js:93
 msgid "No image selected"
@@ -44,7 +45,7 @@ msgstr ""
 
 #: prefs.js:107
 msgid "Enable Scroll Controls"
-msgstr "Ativar Controle por Rolagem"
+msgstr "Управление прокруткой"
 
 #: prefs.js:108
 msgid "Change Tracks or Volume using scroll wheel or touchpad"
@@ -68,19 +69,19 @@ msgstr ""
 
 #: prefs.js:145
 msgid "Invert Scroll Animation"
-msgstr "Inverter AnimaÃÂ§ÃÂ£o de Rolagem"
+msgstr "Инвертировать анимацию"
 
 #: prefs.js:146
 msgid "Direction of the jump effect (Natural vs Traditional)"
-msgstr "DireÃÂ§ÃÂ£o do efeito de pulo (Natural vs Tradicional)"
+msgstr "Направление эффекта прыжка (Естественное или Традиционное)"
 
 #: prefs.js:158
 msgid "Scrolling Text"
-msgstr "Texto Rolante"
+msgstr "Прокрутка текста"
 
 #: prefs.js:159
 msgid "Animate long track titles and artist names"
-msgstr "Animar tÃÂ­tulos longos e nomes de artistas"
+msgstr "Анимировать длинные названия треков и исполнителей"
 
 #: prefs.js:169
 msgid "Tablet Mode"
@@ -95,7 +96,7 @@ msgid "Inline Artist"
 msgstr ""
 
 #: prefs.js:175
-msgid "Show \"Title â¢ Artist\" when the widget is squeezed"
+msgid "Show \"Title • Artist\" when the widget is squeezed"
 msgstr ""
 
 #: prefs.js:182
@@ -105,7 +106,7 @@ msgstr ""
 #: prefs.js:183
 
 msgid "Hide title and artist"
-msgstr "Animar tÃÂ­tulos longos e nomes de artistas"
+msgstr "Анимировать длинные названия треков и исполнителей"
 
 #: prefs.js:196
 msgid "Mouse Actions"
@@ -141,7 +142,7 @@ msgstr ""
 
 #: prefs.js:253 prefs.js:437
 msgid "Enable Shadow"
-msgstr "Ativar Sombra"
+msgstr "Включить тень"
 
 #: prefs.js:254
 msgid "Show drop shadow behind the pop-up menu"
@@ -202,12 +203,12 @@ msgstr ""
 #: prefs.js:331
 
 msgid "Show Visualizer in Pop-up"
-msgstr "Visualizador e Forma"
+msgstr "Визуализатор и Форма"
 
 #: prefs.js:338
 
 msgid "Hide Pill Visualizer"
-msgstr "Aplicar ao Visualizador"
+msgstr "Применить к визуализатору"
 
 #: prefs.js:339
 msgid "Creates a \"moving\" effect by hiding the main pill visualizer"
@@ -219,27 +220,27 @@ msgstr ""
 
 #: prefs.js:360
 msgid "Visualizer and Shape"
-msgstr "Visualizador e Forma"
+msgstr "Визуализатор и Форма"
 
 #: prefs.js:363
 msgid "Off (Disabled)"
-msgstr "Desligado"
+msgstr "Выкл (Отключено)"
 
 #: prefs.js:364
 msgid "Wave (Smooth)"
-msgstr "Onda (Suave)"
+msgstr "Волна (Плавная)"
 
 #: prefs.js:365
 msgid "Beat (Jumpy)"
-msgstr "Batida (Saltitante)"
+msgstr "Бит (Резкая)"
 
 #: prefs.js:368
 msgid "Visualizer Animation"
-msgstr "AnimaÃÂ§ÃÂ£o do Visualizador"
+msgstr "Анимация визуализатора"
 
 #: prefs.js:369
 msgid "Select the style of the audio reaction bars"
-msgstr "Selecione o estilo das barras de reaÃÂ§ÃÂ£o"
+msgstr "Выберите стиль реакции на аудио"
 
 #: prefs.js:376
 msgid "Visualizer Margin"
@@ -251,28 +252,27 @@ msgstr ""
 
 #: prefs.js:384
 msgid "Corner Radius"
-msgstr "Raio da Borda"
+msgstr "Радиус углов"
 
 #: prefs.js:385
 msgid "Roundness of the widget edges (0 = Square, 25 = Pill)"
-msgstr "Arredondamento das bordas (0 = Quadrado, 25 = PÃÂ­lula)"
+msgstr "Закругленность краев (0 = Квадрат, 25 = Пилюля)"
 
 #: prefs.js:392
 msgid "Background and Transparency"
-msgstr "Fundo e TransparÃÂªncia"
+msgstr "Фон и Прозрачность"
 
 #: prefs.js:394
 msgid "Enable Transparency"
-msgstr "Ativar TransparÃÂªncia"
+msgstr "Включить прозрачность"
 
 #: prefs.js:395
 msgid "Switch between a solid theme background and a custom transparent look"
-msgstr ""
-"Alternar entre fundo sÃÂ³lido do tema e visual transparente personalizado"
+msgstr "Переключение между сплошным фоном темы и прозрачным видом"
 
 #: prefs.js:406
 msgid "Background Opacity"
-msgstr "Opacidade do Fundo"
+msgstr "Непрозрачность фона"
 
 #: prefs.js:407
 msgid "Adjust transparency level"
@@ -280,15 +280,15 @@ msgstr ""
 
 #: prefs.js:414
 msgid "Apply to Album Art"
-msgstr "Aplicar na Capa do ÃÂlbum"
+msgstr "Применить к обложке"
 
 #: prefs.js:421
 msgid "Apply to Text"
-msgstr "Aplicar ao Texto"
+msgstr "Применить к тексту"
 
 #: prefs.js:428
 msgid "Apply to Visualizer"
-msgstr "Aplicar ao Visualizador"
+msgstr "Применить к визуализатору"
 
 #: prefs.js:436
 msgid "Main Pill Shadow"
@@ -296,11 +296,11 @@ msgstr ""
 
 #: prefs.js:444
 msgid "Shadow Intensity"
-msgstr "Intensidade da Sombra"
+msgstr "Интенсивность тени"
 
 #: prefs.js:451
 msgid "Shadow Blur"
-msgstr "Desfoque da Sombra"
+msgstr "Размытие тени"
 
 #: prefs.js:458
 msgid "Positioning"
@@ -308,27 +308,27 @@ msgstr ""
 
 #: prefs.js:460
 msgid "Dock"
-msgstr "Dock"
+msgstr "Док"
 
 #: prefs.js:461
 msgid "Panel: Left Box"
-msgstr "Painel: Esquerda"
+msgstr "Панель: Слева"
 
 #: prefs.js:462
 msgid "Panel: Center Box"
-msgstr "Painel: Centro"
+msgstr "Панель: Центр"
 
 #: prefs.js:463
 msgid "Panel: Right Box"
-msgstr "Painel: Direita"
+msgstr "Панель: Справа"
 
 #: prefs.js:466
 msgid "Container Target"
-msgstr "Container Alvo"
+msgstr "Целевой контейнер"
 
 #: prefs.js:467
 msgid "Select which UI element should host the music pill"
-msgstr "Selecione qual elemento da UI deve hospedar a pÃÂ­lula"
+msgstr "Выберите элемент интерфейса для размещения виджета"
 
 #: prefs.js:478
 msgid "Dynamic Width"
@@ -340,55 +340,55 @@ msgstr ""
 
 #: prefs.js:493
 msgid "Manual Index"
-msgstr "ÃÂndice Manual"
+msgstr "Ручной индекс"
 
 #: prefs.js:494
 msgid "First (Start)"
-msgstr "Primeiro (InÃÂ­cio)"
+msgstr "Первый (Начало)"
 
 #: prefs.js:495
 msgid "Center"
-msgstr "Centro"
+msgstr "Центр"
 
 #: prefs.js:496
 msgid "Last (End)"
-msgstr "ÃÂltimo (Fim)"
+msgstr "Последний (Конец)"
 
 #: prefs.js:499
 msgid "Alignment Preset"
-msgstr "PredefiniÃÂ§ÃÂ£o de Alinhamento"
+msgstr "Выравнивание"
 
 #: prefs.js:500
 msgid "How the widget aligns relative to other items"
-msgstr "Como o widget se alinha em relaÃÂ§ÃÂ£o a outros itens"
+msgstr "Как виджет выравнивается относительно других элементов"
 
 #: prefs.js:508
 msgid "Manual Index Position"
-msgstr "PosiÃÂ§ÃÂ£o de ÃÂndice Manual"
+msgstr "Позиция ручного индекса"
 
 #: prefs.js:509
 msgid "Order in the list (0 is first). Only for Manual mode."
-msgstr "Ordem na lista (0 ÃÂ© o primeiro). Apenas modo Manual."
+msgstr "Порядок в списке (0 - первый). Только для ручного режима."
 
 #: prefs.js:516
 msgid "Vertical Offset (Y)"
-msgstr "Deslocamento Vertical (Y)"
+msgstr "Сдвиг по вертикали (Y)"
 
 #: prefs.js:517
 msgid "Shift Up (-) or Down (+)"
-msgstr "Mover para Cima (-) ou Baixo (+)"
+msgstr "Сдвиг вверх (-) или вниз (+)"
 
 #: prefs.js:524
 msgid "Horizontal Offset (X)"
-msgstr "Deslocamento Horizontal (X)"
+msgstr "Сдвиг по горизонтали (X)"
 
 #: prefs.js:525
 msgid "Shift Left (-) or Right (+)"
-msgstr "Mover para Esquerda (-) ou Direita (+)"
+msgstr "Сдвиг влево (-) или вправо (+)"
 
 #: prefs.js:531
 msgid "Dimensions (Dock Mode)"
-msgstr "DimensÃÂµes (Modo Dock)"
+msgstr "Размеры (Режим Дока)"
 
 #: prefs.js:533 prefs.js:555
 msgid "Album Art Size"
@@ -396,15 +396,15 @@ msgstr ""
 
 #: prefs.js:539 prefs.js:561
 msgid "Widget Width"
-msgstr "Largura do Widget"
+msgstr "Ширина виджета"
 
 #: prefs.js:546 prefs.js:568
 msgid "Widget Height"
-msgstr "Altura do Widget"
+msgstr "Высота виджета"
 
 #: prefs.js:553
 msgid "Dimensions (Panel Mode)"
-msgstr "DimensÃÂµes (Modo Painel)"
+msgstr "Размеры (Режим Панели)"
 
 #: prefs.js:574
 msgid "Custom Colors"
@@ -444,11 +444,11 @@ msgstr ""
 
 #: prefs.js:634
 msgid "Game Mode"
-msgstr "Modo Jogo"
+msgstr "Игровой режим"
 
 #: prefs.js:634
 msgid "Disable animations when a fullscreen app is active"
-msgstr "Desativar animaÃÂ§ÃÂµes quando um app em tela cheia estiver ativo"
+msgstr "Отключить анимацию в полноэкранных приложениях"
 
 #: prefs.js:641
 msgid "Slow Player Workaround"
@@ -524,31 +524,31 @@ msgstr ""
 
 #: prefs.js:802
 msgid "Danger Zone"
-msgstr "Zona de Perigo"
+msgstr "Опасная зона"
 
 #: prefs.js:803
 msgid "Reset All"
-msgstr "Redefinir Tudo"
+msgstr "Сбросить всё"
 
 #: prefs.js:805
 msgid "Factory Reset"
-msgstr "Restaurar PadrÃÂµes"
+msgstr "Сброс настроек"
 
 #: prefs.js:816
 msgid "About"
-msgstr "Sobre"
+msgstr "О расширении"
 
 #: prefs.js:821
 msgid "Support the Project"
-msgstr "Apoie o Projeto"
+msgstr "Поддержать проект"
 
 #: prefs.js:824
 msgid "Support on Ko-fi"
-msgstr "Apoie no Ko-fi"
+msgstr "Поддержать на Ko-fi"
 
 #: prefs.js:825
 msgid "Buy me a coffee on Ko-fi"
-msgstr "Compre-me um cafÃÂ© no Ko-fi"
+msgstr "Купить мне кофе на Ko-fi"
 
 #: prefs.js:833
 msgid "Buy Me a Coffee"
@@ -556,70 +556,70 @@ msgstr "Buy Me a Coffee"
 
 #: prefs.js:834
 msgid "Support via BuyMeACoffee"
-msgstr "Apoie via BuyMeACoffee"
+msgstr "Поддержка через BuyMeACoffee"
 
 #: prefs.js:842
 msgid "Source Code"
-msgstr "CÃÂ³digo Fonte"
+msgstr "Исходный код"
 
 #: prefs.js:843
 msgid "Report bugs or view source on GitHub"
-msgstr "Reportar bugs ou ver cÃÂ³digo no GitHub"
+msgstr "Сообщить об ошибке или посмотреть код на GitHub"
 
 #~ msgid "Fix Dock Auto-hide"
-#~ msgstr "Corrigir Auto-ocultar da Dock"
+#~ msgstr "Испр. автоскрытия Дока"
 
 #~ msgid ""
 #~ "WARNING! Use it only if you have problem, keeps a 1px invisible spacer to "
 #~ "prevent Dash-to-Dock from collapsing"
 #~ msgstr ""
-#~ "AVISO! Use apenas se tiver problemas, mantÃÂ©m um espaÃÂ§ador invisÃÂ­vel de "
-#~ "1px para evitar colapso do Dash-to-Dock"
+#~ "ВНИМАНИЕ! Используйте только при проблемах. Создает невидимый разделитель "
+#~ "1px."
 
 #~ msgid "Reset all configuration options to defaults"
-#~ msgstr "Redefinir todas as opÃÂ§ÃÂµes para o padrÃÂ£o"
+#~ msgstr "Сбросить все настройки к значениям по умолчанию"
 
 #~ msgid "Basic display settings for track information"
-#~ msgstr "ConfiguraÃÂ§ÃÂµes bÃÂ¡sicas de exibiÃÂ§ÃÂ£o da faixa"
+#~ msgstr "Основные настройки отображения трека"
 
 #~ msgid "Customize the visibility and opacity"
-#~ msgstr "Personalizar visibilidade e opacidade"
+#~ msgstr "Настройка видимости и прозрачности"
 
 #~ msgid "Make the album cover follow the transparency setting"
-#~ msgstr "A capa do ÃÂ¡lbum segue a configuraÃÂ§ÃÂ£o de transparÃÂªncia"
+#~ msgstr "Применить настройки прозрачности к обложке"
 
 #~ msgid "Make the song title and artist follow the transparency setting"
-#~ msgstr "Tornar o tÃÂ­tulo e artista semi-transparentes"
+#~ msgstr "Сделать текст названия и исполнителя полупрозрачным"
 
 #~ msgid "Make the audio visualizer bar follow the transparency setting"
-#~ msgstr "Tornar as barras do visualizador semi-transparentes"
+#~ msgstr "Сделать полосы визуализатора полупрозрачными"
 
 #~ msgid "Configure the audio visualizer animation"
-#~ msgstr "Configurar a animaÃÂ§ÃÂ£o do visualizador de ÃÂ¡udio"
+#~ msgstr "Настройка анимации аудиовизуализатора"
 
 #~ msgid "Drop Shadow"
-#~ msgstr "Sombra Projetada"
+#~ msgstr "Тень"
 
 #~ msgid "Add depth to the widget with a configurable shadow"
-#~ msgstr "Adicionar profundidade com sombra configurÃÂ¡vel"
+#~ msgstr "Добавить глубину виджету с настраиваемой тенью"
 
 #~ msgid "Draw a shadow behind the main widget and album art"
-#~ msgstr "Desenhar sombra atrÃÂ¡s do widget e capa"
+#~ msgstr "Рисовать тень за виджетом и обложкой"
 
 #~ msgid "Darkness of the shadow (higher is darker)"
-#~ msgstr "EscuridÃÂ£o da sombra (maior ÃÂ© mais escuro)"
+#~ msgstr "Темнота тени (чем выше, тем темнее)"
 
 #~ msgid "Softness of the shadow edges (spread radius)"
-#~ msgstr "Suavidade das bordas da sombra (raio de propagaÃÂ§ÃÂ£o)"
+#~ msgstr "Мягкость краев тени (радиус распространения)"
 
 #~ msgid "Choose where the widget appears on your screen"
-#~ msgstr "Escolha onde o widget aparece na tela"
+#~ msgstr "Выберите, где будет отображаться виджет"
 
 #~ msgid "Total horizontal size in pixels"
-#~ msgstr "Tamanho horizontal total em pixels"
+#~ msgstr "Общий горизонтальный размер в пикселях"
 
 #~ msgid "Total vertical size in pixels"
-#~ msgstr "Tamanho vertical total em pixels"
+#~ msgstr "Общий вертикальный размер в пикселях"
 
 #~ msgid "System and Compatibility"
-#~ msgstr "Sistema e Compatibilidade"
+#~ msgstr "Система и Совместимость"
