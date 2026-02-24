@@ -6,6 +6,34 @@
       <summary>Scroll Action</summary>
       <description>What to do when scrolling (track or volume)</description>
     </key>
+	<key name="hide-text" type="b">
+	<default>false</default>
+	<summary>Hide title and artist entirely</summary>
+    </key>
+    <key name="compatibility-delay" type="b">
+      <default>false</default>
+      <summary>Compatibility Mode for slow players</summary>
+    </key>
+    <key name="fallback-art-path" type="s">
+      <default>''</default>
+      <summary>Fallback Album Art Path</summary>
+    </key>
+    <key name="player-filter-mode" type="i">
+	<default>0</default>
+	<summary>0: Off, 1: Blacklist, 2: Whitelist</summary>
+    </key>
+    <key name="popup-show-visualizer" type="b">
+      <default>false</default>
+      <summary>Show Visualizer in Pop-up</summary>
+    </key>
+    <key name="popup-hide-pill-visualizer" type="b">
+      <default>false</default>
+      <summary>Hide Pill Visualizer when Pop-up is open</summary>
+    </key>
+    <key name="player-filter-list" type="s">
+	<default>''</default>
+	<summary>Comma separated list of players (e.g. firefox,chrome,spotify)</summary>
+    </key>
     <key name="visualizer-padding" type="i">
       <default>12</default>
       <summary>Visualizer Margin</summary>
