@@ -18,7 +18,10 @@ export default class DynamicMusicPrefs extends ExtensionPreferences {
             'enable-scroll-controls', 'action-left-click', 'action-middle-click', 
             'action-right-click', 'action-double-click', 'dock-art-size', 'panel-art-size',          
             'popup-enable-shadow', 'popup-follow-transparency', 'popup-follow-radius', 
-            'popup-vinyl-rotate', 'visualizer-padding', 'scroll-action','popup-vinyl-square', 'popup-show-		vinyl', 'show-shuffle-loop', 'use-custom-colors', 'custom-bg-color', 'custom-text-color', 'tablet-mode', 'inline-artist','pill-dynamic-width', 'popup-use-custom-width', 'popup-custom-width'
+            'popup-vinyl-rotate', 'visualizer-padding', 'scroll-action', 'popup-vinyl-square', 
+            'popup-show-vinyl', 'show-shuffle-loop', 'use-custom-colors', 'custom-bg-color', 
+            'custom-text-color', 'tablet-mode', 'inline-artist', 'pill-dynamic-width', 
+            'popup-use-custom-width', 'popup-custom-width'
         ];
 
         // =========================================
