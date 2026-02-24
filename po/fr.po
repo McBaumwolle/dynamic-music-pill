@@ -4,18 +4,20 @@ msgstr ""
 "Project-Id-Version: Dynamic Music Pill\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-24 09:11+0100\n"
-"PO-Revision-Date: 2026-02-17 00:00+0100\n"
-"Last-Translator: \n"
-"Language-Team: French\n"
+"PO-Revision-Date: 2026-02-24 19:06+0000\n"
+"Last-Translator: elmagio <mistermagio@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/dynamic-music-"
+"pill/settings/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: prefs.js:28
 msgid "Main Pill"
-msgstr ""
+msgstr "Pastille principale"
 
 #: prefs.js:32
 msgid "General Settings"
@@ -36,22 +38,23 @@ msgstr "Activer le contrôle par défilement"
 #: prefs.js:50
 msgid "Change Tracks or Volume using scroll wheel or touchpad"
 msgstr ""
+"Changer de morceau ou le volume avec la molette de souris ou le pavé tactile"
 
 #: prefs.js:61
 msgid "Change Track"
-msgstr ""
+msgstr "Changer de morceau"
 
 #: prefs.js:62
 msgid "Change Volume"
-msgstr ""
+msgstr "Ajuster le volume"
 
 #: prefs.js:67
 msgid "Scroll Action"
-msgstr ""
+msgstr "Action de défilement"
 
 #: prefs.js:68
 msgid "Choose what scrolling on the pill should do"
-msgstr ""
+msgstr "Choisissez l’action associée au défilement sur la pastille"
 
 #: prefs.js:87
 msgid "Invert Scroll Animation"
@@ -71,11 +74,11 @@ msgstr "Animer les titres longs et noms d'artistes"
 
 #: prefs.js:111
 msgid "Tablet Mode"
-msgstr ""
+msgstr "Mode tablette"
 
 #: prefs.js:111
 msgid "Show skip buttons directly on the pill"
-msgstr ""
+msgstr "Afficher les contrôles directement sur la pastille"
 
 #: prefs.js:117
 msgid "Inline Artist"
@@ -91,23 +94,23 @@ msgstr ""
 
 #: prefs.js:134
 msgid "Left Click"
-msgstr ""
+msgstr "Clic gauche"
 
 #: prefs.js:142
 msgid "Middle Click"
-msgstr ""
+msgstr "Clic du milieu"
 
 #: prefs.js:150
 msgid "Right Click"
-msgstr ""
+msgstr "Clic droit"
 
 #: prefs.js:165
 msgid "Pop-up Menu"
-msgstr ""
+msgstr "Menu pop-up"
 
 #: prefs.js:169
 msgid "Pop-up Appearance"
-msgstr ""
+msgstr "Apparence du pop-up"
 
 #: prefs.js:171
 msgid "Rotate Vinyl"
@@ -123,7 +126,7 @@ msgstr "Activer l'ombre"
 
 #: prefs.js:184
 msgid "Show drop shadow behind the pop-up menu"
-msgstr ""
+msgstr "Afficher l'ombre derrière le menu pop-up"
 
 #: prefs.js:195
 msgid "Follow Transparency"
@@ -167,7 +170,7 @@ msgstr ""
 
 #: prefs.js:235
 msgid "Use Custom Width"
-msgstr ""
+msgstr "Définir une largeur personnalisée"
 
 #: prefs.js:235
 msgid "Disable dynamic sizing for the pop-up"
@@ -175,11 +178,11 @@ msgstr ""
 
 #: prefs.js:242
 msgid "Custom Width Value"
-msgstr ""
+msgstr "Largeur personnalisée"
 
 #: prefs.js:269
 msgid "Style & Layout"
-msgstr ""
+msgstr "Style & Dispositition"
 
 #: prefs.js:273
 msgid "Visualizer and Shape"
@@ -239,7 +242,7 @@ msgstr "Opacité de l'arrière-plan"
 
 #: prefs.js:320
 msgid "Adjust transparency level"
-msgstr ""
+msgstr "Ajuster le niveau de transparence"
 
 #: prefs.js:327
 msgid "Apply to Album Art"
@@ -267,7 +270,7 @@ msgstr "Flou de l'ombre"
 
 #: prefs.js:371
 msgid "Positioning"
-msgstr ""
+msgstr "Position"
 
 #: prefs.js:373
 msgid "Dock"
@@ -295,7 +298,7 @@ msgstr "Sélectionner l'élément d'interface qui contient le widget"
 
 #: prefs.js:391
 msgid "Dynamic Width"
-msgstr ""
+msgstr "Largeur dynamique"
 
 #: prefs.js:391
 msgid "Auto-adjust pill width (slider acts as max width)"
